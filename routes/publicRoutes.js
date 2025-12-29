@@ -191,7 +191,15 @@ router.post('/subscribe', async (req, res) => {
     try {
         const Subscriber = require('../models/Subscriber');
         await Subscriber.create({ email: req.body.email });
-        res.send('subscribed'); // Simple response for now, ideally flash message
+        // await Subscriber.create({ email: req.body.email }); 
+        // Ideally checking for duplicates too, but typically minimal logic for now
+        // Using try-catch to ignore duplicates if uniqueness is set in schema
+        try {
+            await Subscriber.create({ email: req.body.email });
+        } catch (e) {
+            // ignore duplicate email error
+        }
+        res.redirect(req.get('referer') || '/');
     } catch (error) {
         console.log(error);
     }
