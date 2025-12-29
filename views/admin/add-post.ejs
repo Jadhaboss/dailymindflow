@@ -1,73 +1,126 @@
-<div class="admin-actions reveal">
-    <h1>Write New Post</h1>
-    <a href="/admin/dashboard" class="back-link"
-        style="color: var(--text-secondary); display: inline-flex; align-items: center; gap: 8px;">
-        <i class="fas fa-arrow-left"></i> Back to Dashboard
-    </a>
-</div>
+<div class="container" style="padding-top: 40px; padding-bottom: 60px;">
 
-<div class="reveal"
-    style="max-width: 800px; background: var(--surface-1); padding: 40px; border-radius: 20px; border: 1px solid var(--border-color); box-shadow: var(--shadow-sm);">
-    <form action="/admin/add-post" method="POST" class="post-form" enctype="multipart/form-data">
+    <!-- Header Section -->
+    <div class="admin-header reveal" style="margin-bottom: 40px; text-align: center;">
+        <a href="/admin/dashboard" class="back-link"
+            style="display: inline-flex; align-items: center; gap: 8px; color: var(--text-secondary); margin-bottom: 16px; font-weight: 500; font-size: 0.9rem;">
+            <i class="fas fa-arrow-left"></i> Back to Dashboard
+        </a>
+        <h1 style="font-size: 3rem; margin-bottom: 10px;">Create New Story</h1>
+        <p style="color: var(--text-secondary); font-size: 1.1rem; max-width: 600px; margin: 0 auto;">
+            Share your thoughts with the world. Create beautiful content that inspires.
+        </p>
+    </div>
 
-        <div class="form-group">
-            <label for="title" class="form-label">Post Title</label>
-            <input type="text" id="title" name="title" required class="form-control"
-                placeholder="Enter an engaging title">
-        </div>
+    <!-- Main Layout -->
+    <div class="reveal" style="max-width: 900px; margin: 0 auto;">
 
-        <div class="form-group">
-            <label class="form-label">Cover Image</label>
+        <form action="/admin/add-post" method="POST" enctype="multipart/form-data">
 
             <div
-                style="background: var(--surface-2); padding: 20px; border-radius: 12px; margin-bottom: 20px; border: 1px dashed var(--border-color);">
-                <label for="imageUpload"
-                    style="display: block; margin-bottom: 8px; font-weight: 500; cursor: pointer; color: var(--accent-color);">
-                    <i class="fas fa-cloud-upload-alt"></i> Option 1: Upload File
-                </label>
-                <input type="file" id="imageUpload" name="imageUpload" class="form-control" accept="image/*"
-                    style="padding: 10px;">
+                style="background: var(--surface-1); padding: 40px; border-radius: 24px; box-shadow: var(--shadow-lg); border: 1px solid var(--border-color);">
+
+                <!-- Title & Category Row -->
+                <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 24px; margin-bottom: 30px;">
+                    <div class="form-group" style="margin-bottom: 0;">
+                        <label for="title" class="form-label">Title</label>
+                        <input type="text" id="title" name="title" required class="form-control"
+                            placeholder="Enter a captivating title..." style="font-size: 1.2rem; font-weight: 600;">
+                    </div>
+
+                    <div class="form-group" style="margin-bottom: 0;">
+                        <label for="category" class="form-label">Category</label>
+                        <div style="position: relative;">
+                            <select name="category" id="category" class="form-control"
+                                style="appearance: none; cursor: pointer;">
+                                <% categories.forEach(cat=> { %>
+                                    <option value="<%= cat._id %>">
+                                        <%= cat.name %>
+                                    </option>
+                                    <% }) %>
+                            </select>
+                            <i class="fas fa-chevron-down"
+                                style="position: absolute; right: 15px; top: 50%; transform: translateY(-50%); color: var(--text-secondary); pointer-events: none;"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Media Section -->
+                <div class="form-group" style="margin-bottom: 30px;">
+                    <label class="form-label"
+                        style="display: flex; justify-content: space-between; align-items: center;">
+                        Cover Image
+                        <span style="font-size: 0.85rem; color: var(--text-secondary); font-weight: 400;">Choose upload
+                            or URL</span>
+                    </label>
+
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px;">
+
+                        <!-- Upload Box -->
+                        <div style="position: relative; height: 100%;">
+                            <input type="file" id="imageUpload" name="imageUpload" accept="image/*"
+                                style="position: absolute; width: 100%; height: 100%; opacity: 0; cursor: pointer; z-index: 2;">
+                            <div style="height: 100%; min-height: 120px; background: var(--surface-2); border: 2px dashed var(--border-color); border-radius: 16px; display: flex; flex-direction: column; align-items: center; justify-content: center; transition: all 0.3s ease;"
+                                class="upload-box-visual">
+                                <i class="fas fa-cloud-upload-alt"
+                                    style="font-size: 1.5rem; color: var(--accent-color); margin-bottom: 8px;"></i>
+                                <span style="font-weight: 500; color: var(--text-color);">Upload File</span>
+                                <span style="font-size: 0.8rem; color: var(--text-secondary);">Drag & drop or
+                                    click</span>
+                            </div>
+                        </div>
+
+                        <!-- URL Input -->
+                        <div style="display: flex; flex-direction: column; justify-content: center;">
+                            <div class="form-group" style="margin-bottom: 0;">
+                                <div style="position: relative;">
+                                    <i class="fas fa-link"
+                                        style="position: absolute; left: 15px; top: 50%; transform: translateY(-50%); color: var(--text-secondary);"></i>
+                                    <input type="text" id="image" name="image" class="form-control"
+                                        placeholder="Or paste image URL..." style="padding-left: 40px;">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Content Editor -->
+                <div class="form-group" style="margin-bottom: 40px;">
+                    <label for="body" class="form-label">Story Content</label>
+                    <textarea name="body" id="body" rows="15" required class="form-control"
+                        placeholder="Tell your story..."
+                        style="font-size: 1.05rem; line-height: 1.8; border: none; background: transparent; padding: 0; min-height: 300px; resize: none; border-top: 1px solid var(--border-color); padding-top: 20px; border-radius: 0;"></textarea>
+                </div>
+
+                <!-- Action Bar -->
+                <div
+                    style="display: flex; align-items: center; justify-content: space-between; padding-top: 20px; border-top: 1px solid var(--border-color);">
+                    <a href="/admin/dashboard" style="color: var(--text-secondary); font-weight: 500;">Cancel</a>
+
+                    <button type="submit" class="btn-primary"
+                        style="padding-left: 40px; padding-right: 40px; font-size: 1.1rem;">
+                        <i class="fas fa-paper-plane" style="margin-right: 8px;"></i> Publish
+                    </button>
+                </div>
+
             </div>
+        </form>
+    </div>
 
-            <div style="margin-top: 10px;">
-                <label for="image" style="display: block; margin-bottom: 5px; font-weight: 500;">Option 2: Image
-                    URL</label>
-                <input type="text" id="image" name="image" class="form-control"
-                    placeholder="https://example.com/image.jpg">
-                <small style="color: var(--text-secondary); margin-top: 6px; display: block;">If both are provided, the
-                    uploaded file takes precedence.</small>
-            </div>
-        </div>
-
-        <div class="form-group">
-            <label for="category" class="form-label">Category</label>
-            <div style="position: relative;">
-                <select name="category" id="category" class="form-control" style="appearance: none;">
-                    <% categories.forEach(cat=> { %>
-                        <option value="<%= cat._id %>">
-                            <%= cat.name %>
-                        </option>
-                        <% }) %>
-                </select>
-                <i class="fas fa-chevron-down"
-                    style="position: absolute; right: 20px; top: 50%; transform: translateY(-50%); pointer-events: none; color: var(--text-secondary);"></i>
-            </div>
-            <small style="display:block; margin-top:8px; color: var(--text-secondary);">
-                <i class="fas fa-info-circle"></i> Need a new category? Add it via database seed or extended admin
-                features.
-            </small>
-        </div>
-
-        <div class="form-group">
-            <label for="body" class="form-label">Content</label>
-            <textarea name="body" id="body" rows="12" required class="form-control"
-                placeholder="Start writing your story..."></textarea>
-        </div>
-
-        <div style="display: flex; justify-content: flex-end; gap: 16px; margin-top: 30px;">
-            <a href="/admin/dashboard" class="btn"
-                style="padding: 12px 24px; border-radius: 50px; border: 1px solid var(--border-color); color: var(--text-secondary);">Cancel</a>
-            <button type="submit" class="btn-primary">Publish Post</button>
-        </div>
-    </form>
 </div>
+
+<!-- Hover Effect Script for Upload Box -->
+<script>
+    const fileInput = document.getElementById('imageUpload');
+    const visualBox = document.querySelector('.upload-box-visual');
+
+    fileInput.addEventListener('dragenter', () => visualBox.style.borderColor = 'var(--accent-color)');
+    fileInput.addEventListener('dragleave', () => visualBox.style.borderColor = 'var(--border-color)');
+    fileInput.addEventListener('change', () => {
+        if (fileInput.files.length > 0) {
+            visualBox.style.borderColor = 'var(--accent-color)';
+            visualBox.innerHTML = '<i class="fas fa-check" style="color: var(--accent-color); font-size: 1.5rem;"></i><span style="margin-top:8px; font-weight:500;">' + fileInput.files[0].name + '</span>';
+            visualBox.style.background = 'rgba(209, 176, 104, 0.1)';
+        }
+    });
+</script>
