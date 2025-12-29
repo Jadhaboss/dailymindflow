@@ -14,14 +14,18 @@ router.get('', async (req, res) => {
 
         // Show only latest 6 posts on home, no pagination needed for landing feel
         // User can click "See All" to go to /articles
+        const limit = 6;
         const data = await Post.aggregate([{ $sort: { createdAt: -1 } }])
-            .limit(6)
+            .limit(limit)
             .exec();
+
+        const totalPosts = await Post.countDocuments();
 
         res.render('index', {
             locals,
             data,
-            currentRoute: '/'
+            currentRoute: '/',
+            showSeeAll: totalPosts > limit
         });
 
     } catch (error) {

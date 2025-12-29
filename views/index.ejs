@@ -27,9 +27,12 @@
             <% }) %>
     </div>
 
-    <div style="margin-top: 60px; text-align: center;" class="reveal">
-        <a href="/articles" class="btn btn-primary" style="padding: 14px 32px; font-size: 1.1rem; border-radius: 50px;">
-            See All Articles <i class="fas fa-arrow-right" style="margin-left: 8px;"></i>
-        </a>
-    </div>
+    <% if (typeof showSeeAll !=='undefined' && showSeeAll) { %>
+        <div style="margin-top: 60px; text-align: center;" class="reveal">
+            <a href="/articles" class="btn btn-primary"
+                style="padding: 14px 32px; font-size: 1.1rem; border-radius: 50px;">
+                See All Articles <i class="fas fa-arrow-right" style="margin-left: 8px;"></i>
+            </a>
+        </div>
+        <% } %>
 </section>
