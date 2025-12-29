@@ -1,0 +1,94 @@
+<div class="hero">
+    <h1>Get in Touch</h1>
+    <p>Have a story to share or a question on your mind? We'd love to hear from you.</p>
+</div>
+
+<div class="container page-content" style="max-width: 1000px; margin: 0 auto; padding-bottom: 100px;">
+
+    <div class="contact-grid reveal">
+
+        <!-- Contact Form -->
+        <div class="contact-form-wrapper"
+            style="background: var(--surface-1); padding: 40px; border-radius: 24px; border: 1px solid var(--border-color); box-shadow: var(--shadow-lg);">
+            <h2 style="font-size: 1.8rem; margin-bottom: 24px;">Send us a Message</h2>
+            <form action="/contact" method="POST"> <!-- Assuming post route exists or just for demo -->
+                <div class="form-group">
+                    <label for="name" class="form-label">Full Name</label>
+                    <input type="text" id="name" name="name" class="form-control" placeholder="John Doe" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="email" class="form-label">Email Address</label>
+                    <input type="email" id="email" name="email" class="form-control" placeholder="john@example.com"
+                        required>
+                </div>
+
+                <div class="form-group">
+                    <label for="subject" class="form-label">Subject</label>
+                    <input type="text" id="subject" name="subject" class="form-control"
+                        placeholder="Collaboration, Feedback, etc.">
+                </div>
+
+                <div class="form-group">
+                    <label for="message" class="form-label">Message</label>
+                    <textarea id="message" name="message" class="form-control"
+                        placeholder="Write your thoughts here..."></textarea>
+                </div>
+
+                <button type="submit" class="btn-primary" style="width: 100%;">Send Message</button>
+            </form>
+        </div>
+
+        <!-- Contact Info -->
+        <div class="contact-info">
+            <div style="margin-bottom: 40px;">
+                <h2 style="font-size: 1.8rem; margin-bottom: 20px;">Contact Information</h2>
+                <p style="color: var(--text-secondary); margin-bottom: 24px;">
+                    Our team is available Mon-Fri, 9am - 6pm. We read every message and aim to respond within 24 hours.
+                </p>
+
+                <div style="display: flex; flex-direction: column; gap: 20px;">
+                    <div style="display: flex; align-items: center; gap: 16px;">
+                        <div
+                            style="width: 48px; height: 48px; background: var(--surface-2); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--accent-color);">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <div>
+                            <h4 style="font-size: 1.1rem; margin-bottom: 4px;">Email</h4>
+                            <a href="mailto:hello@dailymindflow.com"
+                                style="color: var(--text-secondary);">hello@dailymindflow.com</a>
+                        </div>
+                    </div>
+
+                    <div style="display: flex; align-items: center; gap: 16px;">
+                        <div
+                            style="width: 48px; height: 48px; background: var(--surface-2); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--accent-color);">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </div>
+                        <div>
+                            <h4 style="font-size: 1.1rem; margin-bottom: 4px;">Office</h4>
+                            <p style="color: var(--text-secondary);">123 Innovation Blvd, Tech City</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Socials -->
+            <div style="padding: 30px; background: var(--surface-2); border-radius: 20px;">
+                <h3 style="font-size: 1.4rem; margin-bottom: 16px;">Follow Us</h3>
+                <div style="display: flex; gap: 16px;">
+                    <a href="#" class="btn-icon"
+                        style="background: var(--surface-1); width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; border-radius: 50%;"><i
+                            class="fab fa-twitter"></i></a>
+                    <a href="#" class="btn-icon"
+                        style="background: var(--surface-1); width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; border-radius: 50%;"><i
+                            class="fab fa-instagram"></i></a>
+                    <a href="#" class="btn-icon"
+                        style="background: var(--surface-1); width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; border-radius: 50%;"><i
+                            class="fab fa-linkedin-in"></i></a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

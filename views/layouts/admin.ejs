@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel - DailyMindflow</title>
+    <link rel="icon" href="/images/logo.png" type="image/png">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* Admin Specific Overrides */
+        .admin-header {
+            background-color: var(--surface-1);
+            border-bottom: 1px solid var(--border-color);
+            padding: 1rem 0;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .admin-header .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-color);
+            font-family: var(--font-display);
+        }
+
+        .admin-header .nav-link {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        .admin-header .nav-link:hover {
+            color: var(--accent-color);
+        }
+
+        .admin-container {
+            max-width: 1000px;
+            margin: 40px auto;
+            padding: 0 24px;
+            min-height: calc(100vh - 200px);
+        }
+
+        .admin-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 32px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .admin-actions h1 {
+            margin-bottom: 0;
+            font-size: 2rem;
+        }
+
+        /* Mobile Responsiveness */
+        @media (max-width: 768px) {
+            .admin-header .navbar {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .admin-actions {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+
+            .admin-actions div {
+                width: 100%;
+                justify-content: space-between;
+            }
+
+            .table-responsive {
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header class="admin-header">
+        <div class="container navbar">
+            <a href="/admin/dashboard" class="logo" style="display: flex; align-items: center; gap: 10px;">
+                <img src="/images/logo.png" alt="Logo" style="height: 40px; border-radius: 50%;">
+                <span>Admin <span style="color: var(--accent-color);">Panel</span></span>
+            </a>
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="/" target="_blank" class="nav-link"><i class="fas fa-external-link-alt"></i> View
+                            Site</a></li>
+                    <li><a href="/auth/logout" class="nav-link" style="color: #ff4d4d;"><i
+                                class="fas fa-sign-out-alt"></i> Logout</a></li>
+                </ul>
+                <button id="themeToggle" class="btn-icon" aria-label="Toggle Theme" style="margin-left: 15px;"><i
+                        class="fas fa-moon"></i></button>
+            </nav>
+        </div>
+    </header>
+
+    <main class="admin-container">
+        <%- body %>
+    </main>
+
+    <footer class="main-footer" style="padding: 30px 0;">
+        <div class="container">
+            <p>&copy; <%= new Date().getFullYear() %> DailyMindflow Admin. Secure Area.</p>
+        </div>
+    </footer>
+
+    <script src="/js/main.js"></script>
+
+</body>
+
+</html>

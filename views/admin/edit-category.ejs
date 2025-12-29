@@ -1,0 +1,24 @@
+<div class="admin-actions reveal">
+    <h1>Edit Category</h1>
+    <a href="/admin/categories" class="back-link"
+        style="color: var(--text-secondary); display: inline-flex; align-items: center; gap: 8px;">
+        <i class="fas fa-arrow-left"></i> Back to Categories
+    </a>
+</div>
+
+<div class="reveal"
+    style="max-width: 600px; background: var(--surface-1); padding: 40px; border-radius: 20px; border: 1px solid var(--border-color); box-shadow: var(--shadow-sm);">
+    <form action="/admin/edit-category/<%= data._id %>?_method=PUT" method="POST">
+
+        <div class="form-group">
+            <label for="name" class="form-label">Category Name</label>
+            <input type="text" id="name" name="name" value="<%= data.name %>" required class="form-control">
+        </div>
+
+        <div style="display: flex; justify-content: flex-end; gap: 16px; margin-top: 30px;">
+            <a href="/admin/categories" class="btn"
+                style="padding: 12px 24px; border-radius: 50px; border: 1px solid var(--border-color); color: var(--text-secondary);">Cancel</a>
+            <button type="submit" class="btn-primary">Update Category</button>
+        </div>
+    </form>
+</div>

@@ -1,0 +1,74 @@
+<div class="admin-actions reveal">
+    <h1>Manage Categories</h1>
+    <a href="/admin/dashboard" class="back-link"
+        style="color: var(--text-secondary); display: inline-flex; align-items: center; gap: 8px;">
+        <i class="fas fa-arrow-left"></i> Back to Dashboard
+    </a>
+</div>
+
+<div class="reveal">
+    <!-- Inline Add Form -->
+    <div
+        style="background: var(--surface-1); padding: 30px; border-radius: 16px; border: 1px solid var(--border-color); margin-bottom: 40px; box-shadow: var(--shadow-sm);">
+        <h3 style="margin-bottom: 20px; font-size: 1.2rem;">Add New Category</h3>
+        <form action="/admin/add-category" method="POST"
+            style="display: flex; gap: 16px; align-items: center; flex-wrap: wrap;">
+            <div style="flex-grow: 1;">
+                <input type="text" name="name" required class="form-control"
+                    placeholder="Category Name (e.g. Technology)" style="margin-bottom: 0;">
+            </div>
+            <button type="submit" class="btn-primary" style="white-space: nowrap;">
+                <i class="fas fa-plus"></i> Add Category
+            </button>
+        </form>
+    </div>
+
+    <!-- Categories List -->
+    <div
+        style="background: var(--surface-1); border-radius: 16px; border: 1px solid var(--border-color); overflow: hidden; box-shadow: var(--shadow-sm);">
+        <% if(categories && categories.length> 0) { %>
+            <table style="width: 100%; border-collapse: collapse;">
+                <thead style="background: var(--surface-2); border-bottom: 1px solid var(--border-color);">
+                    <tr>
+                        <th
+                            style="padding: 16px 24px; text-align: left; font-weight: 600; color: var(--text-secondary);">
+                            Name</th>
+                        <th
+                            style="padding: 16px 24px; text-align: right; font-weight: 600; color: var(--text-secondary);">
+                            Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% categories.forEach(cat=> { %>
+                        <tr style="border-bottom: 1px solid var(--border-color);">
+                            <td style="padding: 16px 24px; font-weight: 500;">
+                                <%= cat.name %>
+                            </td>
+                            <td style="padding: 16px 24px; text-align: right;">
+                                <div style="display: inline-flex; gap: 8px;">
+                                    <a href="/admin/edit-category/<%= cat._id %>" class="btn"
+                                        style="background: var(--surface-2); color: var(--text-color); padding: 8px 16px; border-radius: 8px; font-size: 0.9rem; border: 1px solid var(--border-color); display: inline-flex; align-items: center; gap: 6px;">
+                                        <i class="fas fa-edit"></i> Edit
+                                    </a>
+
+                                    <form action="/admin/delete-category/<%= cat._id %>?_method=DELETE" method="POST"
+                                        style="display:inline;"
+                                        onsubmit="return confirm('Are you sure? Posts in this category might lose their association.');">
+                                        <button type="submit" class="btn"
+                                            style="background: rgba(255, 77, 77, 0.1); color: #ff4d4d; padding: 8px 16px; border-radius: 8px; font-size: 0.9rem; border: 1px solid rgba(255, 77, 77, 0.2); cursor: pointer; display: inline-flex; align-items: center; gap: 6px;">
+                                            <i class="fas fa-trash-alt"></i> Delete
+                                        </button>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                        <% }) %>
+                </tbody>
+            </table>
+            <% } else { %>
+                <div style="padding: 40px; text-align: center; color: var(--text-secondary);">
+                    Create your first category above!
+                </div>
+                <% } %>
+    </div>
+</div>

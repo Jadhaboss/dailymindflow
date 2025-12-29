@@ -1,0 +1,43 @@
+<header class="site-header">
+    <div class="container navbar">
+        <a href="/" class="logo">
+            <img src="/images/logo.png?v=<%= Date.now() %>" alt="DailyMindflow">
+        </a>
+
+        <nav>
+            <ul class="nav-links">
+                <li><a href="/" class="nav-link">Home</a></li>
+                <li><a href="/about" class="nav-link">About</a></li>
+                <li><a href="/contact" class="nav-link">Contact</a></li>
+            </ul>
+        </nav>
+
+        <div class="nav-actions">
+            <!-- Inline Search Form -->
+            <div class="search-container-inline">
+                <form action="/search" method="POST" class="search-input-wrapper" id="searchWrapper">
+                    <input type="text" name="searchTerm" class="search-input-inline" id="searchInput"
+                        placeholder="Search..." autocomplete="off">
+                    <button type="button" class="search-toggle-btn" id="searchToggle"><i
+                            class="fas fa-search"></i></button>
+                    <div class="search-suggestions" id="searchSuggestions">
+                        <!-- Suggestions appended via JS -->
+                    </div>
+                </form>
+            </div>
+
+            <button id="themeToggle" class="btn-icon" aria-label="Toggle Theme"><i class="fas fa-moon"></i></button>
+            <button id="mobileMenuBtn" class="btn-icon mobile-menu-btn" aria-label="Menu"><i
+                    class="fas fa-bars"></i></button>
+        </div>
+    </div>
+
+    <div class="mobile-menu-overlay" id="mobileMenuOverlay">
+        <button id="mobileMenuClose" class="close-btn"><i class="fas fa-times"></i></button>
+        <ul class="mobile-nav-links">
+            <li><a href="/" class="mobile-nav-link">Home</a></li>
+            <li><a href="/about" class="mobile-nav-link">About</a></li>
+            <li><a href="/contact" class="mobile-nav-link">Contact</a></li>
+        </ul>
+    </div>
+</header>

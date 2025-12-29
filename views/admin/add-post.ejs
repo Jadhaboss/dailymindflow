@@ -1,0 +1,73 @@
+<div class="admin-actions reveal">
+    <h1>Write New Post</h1>
+    <a href="/admin/dashboard" class="back-link"
+        style="color: var(--text-secondary); display: inline-flex; align-items: center; gap: 8px;">
+        <i class="fas fa-arrow-left"></i> Back to Dashboard
+    </a>
+</div>
+
+<div class="reveal"
+    style="max-width: 800px; background: var(--surface-1); padding: 40px; border-radius: 20px; border: 1px solid var(--border-color); box-shadow: var(--shadow-sm);">
+    <form action="/admin/add-post" method="POST" class="post-form" enctype="multipart/form-data">
+
+        <div class="form-group">
+            <label for="title" class="form-label">Post Title</label>
+            <input type="text" id="title" name="title" required class="form-control"
+                placeholder="Enter an engaging title">
+        </div>
+
+        <div class="form-group">
+            <label class="form-label">Cover Image</label>
+
+            <div
+                style="background: var(--surface-2); padding: 20px; border-radius: 12px; margin-bottom: 20px; border: 1px dashed var(--border-color);">
+                <label for="imageUpload"
+                    style="display: block; margin-bottom: 8px; font-weight: 500; cursor: pointer; color: var(--accent-color);">
+                    <i class="fas fa-cloud-upload-alt"></i> Option 1: Upload File
+                </label>
+                <input type="file" id="imageUpload" name="imageUpload" class="form-control" accept="image/*"
+                    style="padding: 10px;">
+            </div>
+
+            <div style="margin-top: 10px;">
+                <label for="image" style="display: block; margin-bottom: 5px; font-weight: 500;">Option 2: Image
+                    URL</label>
+                <input type="text" id="image" name="image" class="form-control"
+                    placeholder="https://example.com/image.jpg">
+                <small style="color: var(--text-secondary); margin-top: 6px; display: block;">If both are provided, the
+                    uploaded file takes precedence.</small>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="category" class="form-label">Category</label>
+            <div style="position: relative;">
+                <select name="category" id="category" class="form-control" style="appearance: none;">
+                    <% categories.forEach(cat=> { %>
+                        <option value="<%= cat._id %>">
+                            <%= cat.name %>
+                        </option>
+                        <% }) %>
+                </select>
+                <i class="fas fa-chevron-down"
+                    style="position: absolute; right: 20px; top: 50%; transform: translateY(-50%); pointer-events: none; color: var(--text-secondary);"></i>
+            </div>
+            <small style="display:block; margin-top:8px; color: var(--text-secondary);">
+                <i class="fas fa-info-circle"></i> Need a new category? Add it via database seed or extended admin
+                features.
+            </small>
+        </div>
+
+        <div class="form-group">
+            <label for="body" class="form-label">Content</label>
+            <textarea name="body" id="body" rows="12" required class="form-control"
+                placeholder="Start writing your story..."></textarea>
+        </div>
+
+        <div style="display: flex; justify-content: flex-end; gap: 16px; margin-top: 30px;">
+            <a href="/admin/dashboard" class="btn"
+                style="padding: 12px 24px; border-radius: 50px; border: 1px solid var(--border-color); color: var(--text-secondary);">Cancel</a>
+            <button type="submit" class="btn-primary">Publish Post</button>
+        </div>
+    </form>
+</div>
