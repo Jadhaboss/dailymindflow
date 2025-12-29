@@ -1,7 +1,7 @@
 <div class="container" style="padding-top: 40px; padding-bottom: 60px;">
 
     <!-- Header Section -->
-    <div class="admin-header reveal" style="margin-bottom: 40px; text-align: center;">
+    <div class="reveal" style="margin-bottom: 40px; text-align: center;">
         <a href="/admin/dashboard" class="back-link"
             style="display: inline-flex; align-items: center; gap: 8px; color: var(--text-secondary); margin-bottom: 16px; font-weight: 500; font-size: 0.9rem;">
             <i class="fas fa-arrow-left"></i> Back to Dashboard
@@ -29,7 +29,14 @@
                     </div>
 
                     <div class="form-group" style="margin-bottom: 0;">
-                        <label for="category" class="form-label">Category</label>
+                        <label for="category" class="form-label"
+                            style="display: flex; justify-content: space-between; align-items: center;">
+                            Category
+                            <button type="button" id="openCategoryModal"
+                                style="border: none; background: none; color: var(--accent-color); font-size: 0.85rem; font-weight: 500; cursor: pointer; display: flex; align-items: center; gap: 4px;">
+                                <i class="fas fa-plus-circle"></i> New
+                            </button>
+                        </label>
                         <div style="position: relative;">
                             <select name="category" id="category" class="form-control"
                                 style="appearance: none; cursor: pointer;">
@@ -110,7 +117,48 @@
 </div>
 
 <!-- Hover Effect Script for Upload Box -->
+</script>
+
+<!-- New Category Modal -->
+<div id="categoryModal"
+    style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.4); backdrop-filter: blur(8px); webkit-backdrop-filter: blur(8px); z-index: 1000; display: none; align-items: center; justify-content: center; opacity: 0; transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);">
+    <div
+        style="background: var(--surface-1); padding: 40px; border-radius: 24px; width: 90%; max-width: 420px; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25); transform: scale(0.95) translateY(20px); transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); border: 1px solid var(--border-color); position: relative; overflow: hidden;">
+
+        <!-- Decorative Header Gradient -->
+        <div
+            style="position: absolute; top: 0; left: 0; width: 100%; height: 6px; background: linear-gradient(90deg, var(--accent-color), var(--primary-color));">
+        </div>
+
+        <h3 style="margin-bottom: 24px; font-size: 1.7rem; text-align: center;">New Category</h3>
+
+        <div class="form-group" style="margin-bottom: 32px;">
+            <label for="newCategoryName" class="form-label" style="font-size: 0.95rem;">Category Name</label>
+            <div style="position: relative;">
+                <i class="fas fa-tag"
+                    style="position: absolute; left: 16px; top: 50%; transform: translateY(-50%); color: var(--text-secondary); opacity: 0.7;"></i>
+                <input type="text" id="newCategoryName" class="form-control" placeholder="e.g. Technology"
+                    style="padding-left: 48px; border-radius: 12px;">
+            </div>
+            <p id="categoryError"
+                style="color: #ef4444; font-size: 0.85rem; margin-top: 8px; display: none; display: flex; align-items: center; gap: 6px;">
+                <i class="fas fa-exclamation-circle"></i> <span></span>
+            </p>
+        </div>
+
+        <div style="display: flex; gap: 16px;">
+            <button type="button" id="closeCategoryModal" class="btn"
+                style="flex: 1; border: 1px solid var(--border-color); justify-content: center; border-radius: 12px;">Cancel</button>
+            <button type="button" id="saveCategoryBtn" class="btn-primary"
+                style="flex: 1; justify-content: center; border-radius: 12px;">
+                <i class="fas fa-plus"></i> Create
+            </button>
+        </div>
+    </div>
+</div>
+
 <script>
+    // Existing Upload Script
     const fileInput = document.getElementById('imageUpload');
     const visualBox = document.querySelector('.upload-box-visual');
 
@@ -121,6 +169,79 @@
             visualBox.style.borderColor = 'var(--accent-color)';
             visualBox.innerHTML = '<i class="fas fa-check" style="color: var(--accent-color); font-size: 1.5rem;"></i><span style="margin-top:8px; font-weight:500;">' + fileInput.files[0].name + '</span>';
             visualBox.style.background = 'rgba(209, 176, 104, 0.1)';
+        }
+    });
+
+    // Category Modal Logic
+    const modal = document.getElementById('categoryModal');
+    const openBtn = document.getElementById('openCategoryModal');
+    const closeBtn = document.getElementById('closeCategoryModal');
+    const saveBtn = document.getElementById('saveCategoryBtn');
+    const newCatInput = document.getElementById('newCategoryName');
+    const catSelect = document.getElementById('category');
+    const errorMsg = document.getElementById('categoryError');
+
+    openBtn.addEventListener('click', () => {
+        modal.style.display = 'flex';
+        // Force reflow
+        void modal.offsetWidth;
+        modal.style.opacity = '1';
+        modal.children[0].style.transform = 'scale(1) translateY(0)';
+        newCatInput.value = '';
+        errorMsg.style.display = 'none';
+        newCatInput.focus();
+    });
+
+    const closeModal = () => {
+        modal.style.opacity = '0';
+        modal.children[0].style.transform = 'scale(0.95) translateY(20px)';
+        setTimeout(() => {
+            modal.style.display = 'none';
+        }, 400); // Matched CSS transition
+    };
+
+    closeBtn.addEventListener('click', closeModal);
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) closeModal();
+    });
+
+    saveBtn.addEventListener('click', async () => {
+        const name = newCatInput.value.trim();
+        if (!name) return;
+
+        saveBtn.innerText = 'Saving...';
+        saveBtn.disabled = true;
+
+        try {
+            const response = await fetch('/admin/api/add-category', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ name })
+            });
+
+            const data = await response.json();
+
+            if (data.success) {
+                // Add new option to select and select it
+                const option = document.createElement('option');
+                option.value = data.category._id;
+                option.text = data.category.name;
+                catSelect.add(option);
+                catSelect.value = data.category._id;
+                closeModal();
+            } else {
+                errorMsg.innerText = data.message || 'Error creating category';
+                errorMsg.style.display = 'block';
+            }
+        } catch (error) {
+            console.error(error);
+            errorMsg.innerText = 'Server error. Please try again.';
+            errorMsg.style.display = 'block';
+        } finally {
+            saveBtn.innerText = 'Save Category';
+            saveBtn.disabled = false;
         }
     });
 </script>

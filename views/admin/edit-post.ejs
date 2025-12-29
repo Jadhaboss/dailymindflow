@@ -1,81 +1,139 @@
-<div class="admin-actions reveal">
-    <h1>Edit Post</h1>
-    <a href="/admin/dashboard" class="back-link"
-        style="color: var(--text-secondary); display: inline-flex; align-items: center; gap: 8px;">
-        <i class="fas fa-arrow-left"></i> Back to Dashboard
-    </a>
-</div>
+<div class="container" style="padding-top: 40px; padding-bottom: 60px;">
 
-<div class="reveal"
-    style="max-width: 800px; background: var(--surface-1); padding: 40px; border-radius: 20px; border: 1px solid var(--border-color); box-shadow: var(--shadow-sm);">
-    <form action="/admin/edit-post/<%= data._id %>?_method=PUT" method="POST" class="post-form"
-        enctype="multipart/form-data">
+    <!-- Header Section -->
+    <div class="reveal" style="margin-bottom: 40px; text-align: center;">
+        <a href="/admin/dashboard" class="back-link"
+            style="display: inline-flex; align-items: center; gap: 8px; color: var(--text-secondary); margin-bottom: 16px; font-weight: 500; font-size: 0.9rem;">
+            <i class="fas fa-arrow-left"></i> Back to Dashboard
+        </a>
+        <h1 style="font-size: 3rem; margin-bottom: 10px;">Edit Story</h1>
+        <p style="color: var(--text-secondary); font-size: 1.1rem; max-width: 600px; margin: 0 auto;">
+            Refine your content and perfect your message.
+        </p>
+    </div>
 
-        <div class="form-group">
-            <label for="title" class="form-label">Post Title</label>
-            <input type="text" id="title" name="title" value="<%= data.title %>" required class="form-control">
-        </div>
+    <!-- Main Layout -->
+    <div class="reveal" style="max-width: 900px; margin: 0 auto;">
 
-        <div class="form-group">
-            <label for="slug" class="form-label">Slug (URL Friendly Name)</label>
-            <input type="text" id="slug" name="slug" value="<%= data.slug %>" required class="form-control"
-                style="background: var(--surface-2); font-family: monospace;">
-        </div>
+        <form action="/admin/edit-post/<%= data._id %>?_method=PUT" method="POST" enctype="multipart/form-data">
 
-        <div class="form-group">
-            <label class="form-label">Cover Image</label>
+            <div
+                style="background: var(--surface-1); padding: 40px; border-radius: 24px; box-shadow: var(--shadow-lg); border: 1px solid var(--border-color);">
 
-            <% if(data.image) { %>
-                <div
-                    style="margin-bottom: 20px; background: var(--surface-2); padding: 10px; border-radius: 12px; display: inline-block;">
-                    <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 8px;">Current Image:</p>
-                    <img src="<%= data.image %>" alt="Current Cover"
-                        style="height: 120px; border-radius: 8px; border: 1px solid var(--border-color); object-fit: cover;">
+                <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 24px; margin-bottom: 30px;">
+                    <div class="form-group" style="margin-bottom: 0;">
+                        <label for="title" class="form-label">Title</label>
+                        <input type="text" id="title" name="title" value="<%= data.title %>" required
+                            class="form-control" style="font-size: 1.2rem; font-weight: 600;">
+                    </div>
+                    <div class="form-group" style="margin-bottom: 0;">
+                        <label for="category" class="form-label">Category</label>
+                        <div style="position: relative;">
+                            <select name="category" id="category" class="form-control"
+                                style="appearance: none; cursor: pointer;">
+                                <% categories.forEach(cat=> { %>
+                                    <option value="<%= cat._id %>" <%=data.category &&
+                                        data.category.toString()===cat._id.toString() ? 'selected' : '' %>><%= cat.name
+                                            %>
+                                    </option>
+                                    <% }) %>
+                            </select>
+                            <i class="fas fa-chevron-down"
+                                style="position: absolute; right: 15px; top: 50%; transform: translateY(-50%); color: var(--text-secondary); pointer-events: none;"></i>
+                        </div>
+                    </div>
                 </div>
-                <% } %>
 
-                    <div
-                        style="background: var(--surface-2); padding: 20px; border-radius: 12px; margin-bottom: 20px; border: 1px dashed var(--border-color);">
-                        <label for="imageUpload"
-                            style="display: block; margin-bottom: 8px; font-weight: 500; cursor: pointer; color: var(--accent-color);">
-                            <i class="fas fa-cloud-upload-alt"></i> Option 1: Upload New File
-                        </label>
-                        <input type="file" id="imageUpload" name="imageUpload" class="form-control" accept="image/*"
-                            style="padding: 10px;">
+                <div class="form-group" style="margin-bottom: 30px;">
+                    <label for="slug" class="form-label">Slug (URL)</label>
+                    <input type="text" id="slug" name="slug" value="<%= data.slug %>" required class="form-control"
+                        style="background: var(--surface-2); font-family: monospace; font-size: 0.9rem;">
+                </div>
+
+                <!-- Media Section -->
+                <div class="form-group" style="margin-bottom: 30px;">
+                    <label class="form-label">Cover Image</label>
+
+                    <div style="display: grid; grid-template-columns: 1fr 2fr; gap: 24px;">
+                        <!-- Current Image Preview -->
+                        <% if(data.image) { %>
+                            <div
+                                style="position: relative; border-radius: 16px; overflow: hidden; border: 1px solid var(--border-color); height: 160px;">
+                                <img src="<%= data.image %>" alt="Current Cover"
+                                    style="width: 100%; height: 100%; object-fit: cover;">
+                                <div
+                                    style="position: absolute; bottom: 0; left: 0; width: 100%; background: rgba(0,0,0,0.6); color: white; padding: 6px; font-size: 0.8rem; text-align: center;">
+                                    Current</div>
+                            </div>
+                            <% } else { %>
+                                <div
+                                    style="background: var(--surface-2); border-radius: 16px; border: 1px dashed var(--border-color); height: 160px; display: flex; align-items: center; justify-content: center; color: var(--text-secondary);">
+                                    <i class="fas fa-image" style="margin-right: 8px;"></i> No Image
+                                </div>
+                                <% } %>
+
+                                    <div style="display: flex; flex-direction: column; gap: 16px;">
+                                        <div style="position: relative; flex: 1;">
+                                            <input type="file" id="imageUpload" name="imageUpload" accept="image/*"
+                                                style="position: absolute; width: 100%; height: 100%; opacity: 0; cursor: pointer; z-index: 2;">
+                                            <div class="upload-box-visual"
+                                                style="height: 100%; background: var(--surface-2); border: 2px dashed var(--border-color); border-radius: 16px; display: flex; align-items: center; justify-content: center; transition: all 0.3s ease;">
+                                                <div style="text-align: center;">
+                                                    <i class="fas fa-cloud-upload-alt"
+                                                        style="color: var(--accent-color); font-size: 1.2rem;"></i>
+                                                    <span
+                                                        style="display: block; font-weight: 500; font-size: 0.9rem; margin-top: 4px;">Upload
+                                                        New</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div style="position: relative;">
+                                            <i class="fas fa-link"
+                                                style="position: absolute; left: 15px; top: 50%; transform: translateY(-50%); color: var(--text-secondary);"></i>
+                                            <input type="text" id="image" name="image" value="<%= data.image %>"
+                                                class="form-control" placeholder="Or update URL..."
+                                                style="padding-left: 40px;">
+                                        </div>
+                                    </div>
                     </div>
+                </div>
 
-                    <div style="margin-top: 10px;">
-                        <label for="image" style="display: block; margin-bottom: 5px; font-weight: 500;">Option 2: Image
-                            URL</label>
-                        <input type="text" id="image" name="image" value="<%= data.image %>" class="form-control"
-                            placeholder="https://example.com/image.jpg">
-                    </div>
-        </div>
+                <!-- Content Editor -->
+                <div class="form-group" style="margin-bottom: 40px;">
+                    <label for="body" class="form-label">Story Content</label>
+                    <textarea name="body" id="body" rows="15" required class="form-control"
+                        style="font-size: 1.05rem; line-height: 1.8; border: none; background: transparent; padding: 0; min-height: 300px; resize: none; border-top: 1px solid var(--border-color); padding-top: 20px; border-radius: 0;"><%= data.body %></textarea>
+                </div>
 
-        <div class="form-group">
-            <label for="category" class="form-label">Category</label>
-            <div style="position: relative;">
-                <select name="category" id="category" class="form-control" style="appearance: none;">
-                    <% categories.forEach(cat=> { %>
-                        <option value="<%= cat._id %>" <%=data.category && data.category.toString()===cat._id.toString()
-                            ? 'selected' : '' %>><%= cat.name %>
-                        </option>
-                        <% }) %>
-                </select>
-                <i class="fas fa-chevron-down"
-                    style="position: absolute; right: 20px; top: 50%; transform: translateY(-50%); pointer-events: none; color: var(--text-secondary);"></i>
+                <!-- Action Bar -->
+                <div
+                    style="display: flex; align-items: center; justify-content: space-between; padding-top: 20px; border-top: 1px solid var(--border-color);">
+                    <a href="/admin/dashboard" style="color: var(--text-secondary); font-weight: 500;">Cancel</a>
+
+                    <button type="submit" class="btn-primary"
+                        style="padding-left: 40px; padding-right: 40px; font-size: 1.1rem;">
+                        <i class="fas fa-save" style="margin-right: 8px;"></i> Save Changes
+                    </button>
+                </div>
+
             </div>
-        </div>
+        </form>
+    </div>
 
-        <div class="form-group">
-            <label for="body" class="form-label">Content</label>
-            <textarea name="body" id="body" rows="12" required class="form-control"><%= data.body %></textarea>
-        </div>
-
-        <div style="display: flex; justify-content: flex-end; gap: 16px; margin-top: 30px;">
-            <a href="/admin/dashboard" class="btn"
-                style="padding: 12px 24px; border-radius: 50px; border: 1px solid var(--border-color); color: var(--text-secondary);">Cancel</a>
-            <button type="submit" class="btn-primary">Update Post</button>
-        </div>
-    </form>
 </div>
+
+<!-- Hover Effect Script for Upload Box -->
+<script>
+    const fileInput = document.getElementById('imageUpload');
+    const visualBox = document.querySelector('.upload-box-visual');
+
+    fileInput.addEventListener('dragenter', () => visualBox.style.borderColor = 'var(--accent-color)');
+    fileInput.addEventListener('dragleave', () => visualBox.style.borderColor = 'var(--border-color)');
+    fileInput.addEventListener('change', () => {
+        if (fileInput.files.length > 0) {
+            visualBox.style.borderColor = 'var(--accent-color)';
+            visualBox.innerHTML = '<div style="text-align:center"><i class="fas fa-check" style="color: var(--accent-color);"></i><span style="display:block; font-size:0.85rem; margin-top:4px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width:150px;">' + fileInput.files[0].name + '</span></div>';
+            visualBox.style.background = 'rgba(209, 176, 104, 0.1)';
+        }
+    });
+</script>

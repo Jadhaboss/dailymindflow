@@ -1,0 +1,52 @@
+<div class="container" style="padding-top: 60px; padding-bottom: 80px;">
+
+    <div class="reveal" style="text-align: center; margin-bottom: 60px;">
+        <h1 style="font-size: 3rem; margin-bottom: 16px;">All Articles</h1>
+        <p style="color: var(--text-secondary); font-size: 1.1rem;">Explore our entire collection of stories and ideas.
+        </p>
+    </div>
+
+    <section class="posts-section">
+        <div class="post-grid">
+            <% data.forEach(post=> { %>
+                <article class="post-card reveal">
+                    <a href="/post/<%= post._id %>">
+                        <% if(post.image && post.image.trim() !=="" ) { %>
+                            <div class="card-image-wrapper">
+                                <img src="<%= post.image %>" alt="<%= post.title %>" loading="lazy">
+                            </div>
+                            <% } %>
+                                <div class="post-content">
+                                    <h3>
+                                        <%= post.title %>
+                                    </h3>
+                                    <p class="post-excerpt">
+                                        <%= post.body.substring(0, 120) %>...
+                                    </p>
+                                    <span class="read-more-btn">Read More <i class="fas fa-arrow-right"></i></span>
+                                </div>
+                    </a>
+                </article>
+                <% }) %>
+        </div>
+
+        <!-- Pagination -->
+        <% if (nextPage !==null || current> 1) { %>
+            <div class="pagination reveal" style="display: flex; justify-content: center; gap: 20px; margin-top: 60px;">
+                <% if (current> 1) { %>
+                    <a href="/articles?page=<%= parseInt(current) - 1 %>" class="btn"
+                        style="background: var(--surface-1); border: 1px solid var(--border-color); color: var(--text-color); display: flex; align-items: center; gap: 8px;">
+                        <i class="fas fa-arrow-left"></i> Newer Posts
+                    </a>
+                    <% } %>
+
+                        <% if (nextPage !==null) { %>
+                            <a href="/articles?page=<%= nextPage %>" class="btn"
+                                style="background: var(--surface-1); border: 1px solid var(--border-color); color: var(--text-color); display: flex; align-items: center; gap: 8px;">
+                                Older Posts <i class="fas fa-arrow-right"></i>
+                            </a>
+                            <% } %>
+            </div>
+            <% } %>
+    </section>
+</div>

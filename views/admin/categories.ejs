@@ -1,74 +1,108 @@
-<div class="admin-actions reveal">
-    <h1>Manage Categories</h1>
-    <a href="/admin/dashboard" class="back-link"
-        style="color: var(--text-secondary); display: inline-flex; align-items: center; gap: 8px;">
-        <i class="fas fa-arrow-left"></i> Back to Dashboard
-    </a>
-</div>
+<div class="container" style="padding-top: 40px; padding-bottom: 60px;">
 
-<div class="reveal">
-    <!-- Inline Add Form -->
-    <div
-        style="background: var(--surface-1); padding: 30px; border-radius: 16px; border: 1px solid var(--border-color); margin-bottom: 40px; box-shadow: var(--shadow-sm);">
-        <h3 style="margin-bottom: 20px; font-size: 1.2rem;">Add New Category</h3>
-        <form action="/admin/add-category" method="POST"
-            style="display: flex; gap: 16px; align-items: center; flex-wrap: wrap;">
-            <div style="flex-grow: 1;">
-                <input type="text" name="name" required class="form-control"
-                    placeholder="Category Name (e.g. Technology)" style="margin-bottom: 0;">
+    <!-- Header -->
+    <div class="reveal" style="margin-bottom: 40px; text-align: center;">
+        <a href="/admin/dashboard" class="back-link"
+            style="display: inline-flex; align-items: center; gap: 8px; color: var(--text-secondary); margin-bottom: 16px; font-weight: 500; font-size: 0.9rem;">
+            <i class="fas fa-arrow-left"></i> Back to Dashboard
+        </a>
+        <h1 style="font-size: 3rem; margin-bottom: 10px;">Managed Categories</h1>
+        <p style="color: var(--text-secondary); font-size: 1.1rem; max-width: 600px; margin: 0 auto;">
+            Organize your content effectively.
+        </p>
+    </div>
+
+    <div class="reveal" style="max-width: 900px; margin: 0 auto;">
+
+        <!-- Inline Add Form -->
+        <div
+            style="background: var(--surface-1); padding: 30px; border-radius: 20px; border: 1px solid var(--border-color); margin-bottom: 40px; box-shadow: var(--shadow-md); position: relative; overflow: hidden;">
+            <!-- Decorative Stripe -->
+            <div
+                style="position: absolute; left: 0; top: 0; width: 6px; height: 100%; background: var(--accent-color);">
             </div>
-            <button type="submit" class="btn-primary" style="white-space: nowrap;">
-                <i class="fas fa-plus"></i> Add Category
-            </button>
-        </form>
-    </div>
 
-    <!-- Categories List -->
-    <div
-        style="background: var(--surface-1); border-radius: 16px; border: 1px solid var(--border-color); overflow: hidden; box-shadow: var(--shadow-sm);">
-        <% if(categories && categories.length> 0) { %>
-            <table style="width: 100%; border-collapse: collapse;">
-                <thead style="background: var(--surface-2); border-bottom: 1px solid var(--border-color);">
-                    <tr>
-                        <th
-                            style="padding: 16px 24px; text-align: left; font-weight: 600; color: var(--text-secondary);">
-                            Name</th>
-                        <th
-                            style="padding: 16px 24px; text-align: right; font-weight: 600; color: var(--text-secondary);">
-                            Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <% categories.forEach(cat=> { %>
-                        <tr style="border-bottom: 1px solid var(--border-color);">
-                            <td style="padding: 16px 24px; font-weight: 500;">
-                                <%= cat.name %>
-                            </td>
-                            <td style="padding: 16px 24px; text-align: right;">
-                                <div style="display: inline-flex; gap: 8px;">
-                                    <a href="/admin/edit-category/<%= cat._id %>" class="btn"
-                                        style="background: var(--surface-2); color: var(--text-color); padding: 8px 16px; border-radius: 8px; font-size: 0.9rem; border: 1px solid var(--border-color); display: inline-flex; align-items: center; gap: 6px;">
-                                        <i class="fas fa-edit"></i> Edit
-                                    </a>
+            <div style="padding-left: 20px;">
+                <h3 style="margin-bottom: 20px; font-size: 1.4rem;">Add New Category</h3>
+                <form action="/admin/add-category" method="POST"
+                    style="display: grid; grid-template-columns: 1fr auto; gap: 16px; align-items: start;">
+                    <div style="position: relative;">
+                        <i class="fas fa-tag"
+                            style="position: absolute; left: 16px; top: 50%; transform: translateY(-50%); color: var(--text-secondary); opacity: 0.7;"></i>
+                        <input type="text" name="name" required class="form-control"
+                            placeholder="Category Name (e.g. Technology)" style="margin-bottom: 0; padding-left: 48px;">
+                    </div>
+                    <button type="submit" class="btn-primary"
+                        style="white-space: nowrap; height: 100%; min-height: 50px; display: flex; align-items: center; gap: 8px;">
+                        <i class="fas fa-plus"></i> Add
+                    </button>
+                </form>
+            </div>
+        </div>
 
-                                    <form action="/admin/delete-category/<%= cat._id %>?_method=DELETE" method="POST"
-                                        style="display:inline;"
-                                        onsubmit="return confirm('Are you sure? Posts in this category might lose their association.');">
-                                        <button type="submit" class="btn"
-                                            style="background: rgba(255, 77, 77, 0.1); color: #ff4d4d; padding: 8px 16px; border-radius: 8px; font-size: 0.9rem; border: 1px solid rgba(255, 77, 77, 0.2); cursor: pointer; display: inline-flex; align-items: center; gap: 6px;">
-                                            <i class="fas fa-trash-alt"></i> Delete
-                                        </button>
-                                    </form>
-                                </div>
-                            </td>
+        <!-- Categories List -->
+        <div
+            style="background: var(--surface-1); border-radius: 20px; border: 1px solid var(--border-color); overflow: hidden; box-shadow: var(--shadow-lg);">
+            <% if(categories && categories.length> 0) { %>
+                <table style="width: 100%; border-collapse: collapse;">
+                    <thead style="background: var(--surface-2); border-bottom: 1px solid var(--border-color);">
+                        <tr>
+                            <th
+                                style="padding: 20px 30px; text-align: left; font-weight: 600; color: var(--text-secondary); font-size: 0.95rem; text-transform: uppercase; letter-spacing: 0.5px;">
+                                Name</th>
+                            <th
+                                style="padding: 20px 30px; text-align: right; font-weight: 600; color: var(--text-secondary); font-size: 0.95rem; text-transform: uppercase; letter-spacing: 0.5px;">
+                                Actions</th>
                         </tr>
-                        <% }) %>
-                </tbody>
-            </table>
-            <% } else { %>
-                <div style="padding: 40px; text-align: center; color: var(--text-secondary);">
-                    Create your first category above!
-                </div>
-                <% } %>
+                    </thead>
+                    <tbody>
+                        <% categories.forEach(cat=> { %>
+                            <tr style="border-bottom: 1px solid var(--border-color); transition: background 0.2s;"
+                                onmouseover="this.style.background='var(--surface-2)'"
+                                onmouseout="this.style.background='transparent'">
+                                <td style="padding: 20px 30px; font-weight: 500; font-size: 1.1rem;">
+                                    <div style="display: inline-flex; align-items: center; gap: 12px;">
+                                        <div
+                                            style="width: 8px; height: 8px; border-radius: 50%; background: var(--accent-color);">
+                                        </div>
+                                        <%= cat.name %>
+                                    </div>
+                                </td>
+                                <td style="padding: 20px 30px; text-align: right;">
+                                    <div style="display: inline-flex; gap: 8px;">
+                                        <a href="/admin/edit-category/<%= cat._id %>" class="btn"
+                                            style="background: transparent; color: var(--text-color); padding: 8px 12px; border-radius: 8px; font-size: 0.9rem; border: 1px solid var(--border-color); display: inline-flex; align-items: center; gap: 6px; transition: all 0.2s;">
+                                            <i class="fas fa-edit"></i> <span class="hide-mobile">Edit</span>
+                                        </a>
+
+                                        <form action="/admin/delete-category/<%= cat._id %>?_method=DELETE"
+                                            method="POST" style="display:inline;"
+                                            onsubmit="return confirm('Are you sure? Posts in this category might lose their association.');">
+                                            <button type="submit" class="btn"
+                                                style="background: rgba(255, 77, 77, 0.05); color: #ff4d4d; padding: 8px 12px; border-radius: 8px; font-size: 0.9rem; border: 1px solid transparent; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; transition: all 0.2s;">
+                                                <i class="fas fa-trash-alt"></i> <span class="hide-mobile">Delete</span>
+                                            </button>
+                                        </form>
+                                    </div>
+                                </td>
+                            </tr>
+                            <% }) %>
+                    </tbody>
+                </table>
+                <% } else { %>
+                    <div style="padding: 60px; text-align: center; color: var(--text-secondary);">
+                        <i class="fas fa-folder-open" style="font-size: 3rem; margin-bottom: 16px; opacity: 0.5;"></i>
+                        <p>No categories found. Create your first one above!</p>
+                    </div>
+                    <% } %>
+        </div>
     </div>
 </div>
+
+<style>
+    @media (max-width: 600px) {
+        .hide-mobile {
+            display: none;
+        }
+    }
+</style>

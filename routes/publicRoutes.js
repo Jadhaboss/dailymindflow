@@ -4,6 +4,7 @@ const Post = require('../models/Post');
 const Category = require('../models/Category');
 
 // GET / - Home
+// GET / - Home (Featured / Latest)
 router.get('', async (req, res) => {
     try {
         const locals = {
@@ -11,7 +12,32 @@ router.get('', async (req, res) => {
             description: "A Premium Blog"
         };
 
-        let perPage = 6;
+        // Show only latest 6 posts on home, no pagination needed for landing feel
+        // User can click "See All" to go to /articles
+        const data = await Post.aggregate([{ $sort: { createdAt: -1 } }])
+            .limit(6)
+            .exec();
+
+        res.render('index', {
+            locals,
+            data,
+            currentRoute: '/'
+        });
+
+    } catch (error) {
+        console.log(error);
+    }
+});
+
+// GET /articles - All Posts with Pagination
+router.get('/articles', async (req, res) => {
+    try {
+        const locals = {
+            title: "All Articles - DailyMindflow",
+            description: "Browse all articles"
+        };
+
+        let perPage = 9;
         let page = req.query.page || 1;
 
         const data = await Post.aggregate([{ $sort: { createdAt: -1 } }])
@@ -23,12 +49,12 @@ router.get('', async (req, res) => {
         const nextPage = parseInt(page) + 1;
         const hasNextPage = nextPage <= Math.ceil(count / perPage);
 
-        res.render('index', {
+        res.render('articles', {
             locals,
             data,
             current: page,
             nextPage: hasNextPage ? nextPage : null,
-            currentRoute: '/'
+            currentRoute: '/articles'
         });
 
     } catch (error) {

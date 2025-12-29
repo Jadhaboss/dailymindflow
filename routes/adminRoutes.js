@@ -39,11 +39,11 @@ router.get('/add-post', authMiddleware, async (req, res) => {
 // POST /admin/add-post
 router.post('/add-post', authMiddleware, upload.single('imageUpload'), async (req, res) => {
     try {
-        let imagePath = '/images/default-post.jpg'; // Default
+        let imagePath = null; // Default to null for no image
 
         if (req.file) {
             imagePath = `/uploads/${req.file.filename}`;
-        } else if (req.body.image) {
+        } else if (req.body.image && req.body.image.trim() !== "") {
             imagePath = req.body.image;
         }
 
@@ -175,6 +175,27 @@ router.put('/edit-category/:id', authMiddleware, async (req, res) => {
         res.redirect('/admin/categories');
     } catch (error) {
         console.log(error);
+    }
+});
+
+// API Endpoint for Ajax Category Creation
+router.post('/api/add-category', authMiddleware, async (req, res) => {
+    try {
+        const { name } = req.body;
+        if (!name) {
+            return res.status(400).json({ success: false, message: 'Category name is required' });
+        }
+
+        const existingCategory = await Category.findOne({ name });
+        if (existingCategory) {
+            return res.status(400).json({ success: false, message: 'Category already exists' });
+        }
+
+        const newCategory = await Category.create({ name });
+        res.status(201).json({ success: true, category: newCategory });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ success: false, message: 'Internal Server Error' });
     }
 });
 
