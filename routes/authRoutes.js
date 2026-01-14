@@ -4,16 +4,16 @@ const User = require('../models/User');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
-const adminLayout = '../views/layouts/admin';
+const authLayout = '../views/layouts/auth';
 
 // GET /auth/login
 router.get('/login', (req, res) => {
-    res.render('admin/login', { locals: { title: 'Login' }, layout: adminLayout });
+    res.render('admin/login', { locals: { title: 'Login' }, layout: authLayout });
 });
 
 // GET /auth/register
 router.get('/register', (req, res) => {
-    res.render('admin/register', { locals: { title: 'Register' }, layout: adminLayout });
+    res.render('admin/register', { locals: { title: 'Register' }, layout: authLayout });
 });
 
 // POST /auth/register

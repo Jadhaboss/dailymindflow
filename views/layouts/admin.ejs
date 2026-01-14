@@ -5,76 +5,282 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Panel - DailyMindflow</title>
+    <meta name="robots" content="noindex, nofollow">
     <link rel="icon" href="/images/logo.png" type="image/png">
-    <link rel="stylesheet" href="/css/style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
     <style>
-        /* Admin Specific Overrides */
-        .admin-header {
-            background-color: var(--surface-1);
-            border-bottom: 1px solid var(--border-color);
-            padding: 1rem 0;
-            box-shadow: var(--shadow-sm);
+        :root {
+            --bg-dark: #030014;
+            --glass-surface: rgba(10, 10, 15, 0.6);
+            --glass-border: rgba(255, 255, 255, 0.08);
+            --sidebar-width: 280px;
+            --gold-primary: #FFD700;
+            --gold-gradient: linear-gradient(135deg, #FFD700 0%, #FDB931 100%);
+            --text-primary: #ffffff;
+            --text-secondary: rgba(255, 255, 255, 0.6);
+            --success: #10b981;
+            --danger: #ef4444;
         }
 
-        .admin-header .logo {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--text-color);
-            font-family: var(--font-display);
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
 
-        .admin-header .nav-link {
-            color: var(--text-secondary);
-            font-size: 0.95rem;
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: var(--bg-dark);
+            min-height: 100vh;
+            color: var(--text-primary);
+            overflow-x: hidden;
+            position: relative;
         }
 
-        .admin-header .nav-link:hover {
-            color: var(--accent-color);
+        /* --- Ambient Aurora Background --- */
+        .ambient-light {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            overflow: hidden;
+            z-index: -1;
+            pointer-events: none;
         }
 
-        .admin-container {
-            max-width: 1000px;
-            margin: 40px auto;
-            padding: 0 24px;
-            min-height: calc(100vh - 200px);
+        .light-orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(100px);
+            opacity: 0.3;
+            animation: orbFloat 25s infinite ease-in-out;
         }
 
-        .admin-actions {
+        .orb-1 {
+            top: -10%;
+            left: -10%;
+            width: 50vw;
+            height: 50vw;
+            background: radial-gradient(circle, #4338ca 0%, transparent 70%);
+        }
+
+        .orb-2 {
+            bottom: -10%;
+            right: -10%;
+            width: 40vw;
+            height: 40vw;
+            background: radial-gradient(circle, #7e22ce 0%, transparent 70%);
+            animation-delay: -5s;
+        }
+
+        @keyframes orbFloat {
+
+            0%,
+            100% {
+                transform: translate(0, 0);
+            }
+
+            50% {
+                transform: translate(30px, -30px) scale(1.05);
+            }
+        }
+
+        /* --- Noise Texture --- */
+        .noise-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0.03;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+        }
+
+        /* --- Sidebar Navigation --- */
+        .admin-sidebar {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            bottom: 20px;
+            width: var(--sidebar-width);
+            background: var(--glass-surface);
+            backdrop-filter: blur(40px) saturate(180%);
+            -webkit-backdrop-filter: blur(40px) saturate(180%);
+            border: 1px solid var(--glass-border);
+            border-top: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 24px;
+            z-index: 1000;
             display: flex;
-            justify-content: space-between;
+            flex-direction: column;
+            padding: 30px 20px;
+            box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.5);
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .admin-brand {
+            display: flex;
             align-items: center;
-            margin-bottom: 32px;
-            padding-bottom: 16px;
-            border-bottom: 1px solid var(--border-color);
+            gap: 12px;
+            padding-bottom: 30px;
+            margin-bottom: 20px;
+            border-bottom: 1px solid var(--glass-border);
+            text-decoration: none;
         }
 
-        .admin-actions h1 {
-            margin-bottom: 0;
-            font-size: 2rem;
+        .admin-brand img {
+            height: 36px;
+            filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.3));
         }
 
-        /* Mobile Responsiveness */
-        @media (max-width: 768px) {
-            .admin-header .navbar {
-                flex-direction: column;
-                gap: 15px;
+        .admin-brand span {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: #fff;
+            letter-spacing: -0.02em;
+        }
+
+        .admin-brand span span {
+            color: var(--gold-primary);
+        }
+
+        .admin-menu {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            flex-grow: 1;
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 14px 18px;
+            border-radius: 14px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid transparent;
+        }
+
+        .nav-link i {
+            width: 20px;
+            text-align: center;
+            font-size: 1.1rem;
+            transition: color 0.2s;
+        }
+
+        .nav-link:hover {
+            color: #fff;
+            background: rgba(255, 255, 255, 0.05);
+            border-color: rgba(255, 255, 255, 0.05);
+        }
+
+        .nav-link.active {
+            background: linear-gradient(90deg, rgba(255, 215, 0, 0.15), rgba(255, 215, 0, 0.05));
+            color: var(--gold-primary);
+            border: 1px solid rgba(255, 215, 0, 0.2);
+            font-weight: 600;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        .nav-link.active i {
+            color: var(--gold-primary);
+            filter: drop-shadow(0 0 8px rgba(255, 215, 0, 0.5));
+        }
+
+        .admin-footer-actions {
+            border-top: 1px solid var(--glass-border);
+            padding-top: 20px;
+            margin-top: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .action-link {
+            padding: 12px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: all 0.2s;
+        }
+
+        .action-link:hover {
+            background: rgba(255, 255, 255, 0.05);
+            color: #fff;
+        }
+
+        .logout-btn {
+            background: rgba(239, 68, 68, 0.1);
+            color: var(--danger);
+            border: 1px solid rgba(239, 68, 68, 0.2);
+        }
+
+        .logout-btn:hover {
+            background: rgba(239, 68, 68, 0.2);
+            border-color: rgba(239, 68, 68, 0.4);
+        }
+
+        /* --- Main Content --- */
+        .admin-main {
+            margin-left: calc(var(--sidebar-width) + 40px);
+            padding: 40px;
+            min-height: 100vh;
+            position: relative;
+            z-index: 5;
+        }
+
+        /* Mobile Toggle */
+        .mobile-toggle {
+            display: none;
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 2000;
+            background: rgba(10, 10, 15, 0.8);
+            border: 1px solid var(--glass-border);
+            color: #fff;
+            padding: 12px;
+            border-radius: 12px;
+            backdrop-filter: blur(10px);
+            cursor: pointer;
+        }
+
+        @media (max-width: 1024px) {
+            .admin-sidebar {
+                transform: translateX(-120%);
+                width: 280px;
+                background: #050510;
+                /* Solid bg on mobile for legibility */
             }
 
-            .admin-actions {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 15px;
+            .admin-sidebar.active {
+                transform: translateX(0);
             }
 
-            .admin-actions div {
-                width: 100%;
-                justify-content: space-between;
+            .admin-main {
+                margin-left: 0;
+                padding: 100px 20px 40px;
             }
 
-            .table-responsive {
-                overflow-x: auto;
-                -webkit-overflow-scrolling: touch;
+            .mobile-toggle {
+                display: block;
             }
         }
     </style>
@@ -82,37 +288,96 @@
 
 <body>
 
-    <header class="admin-header">
-        <div class="container navbar">
-            <a href="/admin/dashboard" class="logo" style="display: flex; align-items: center; gap: 10px;">
-                <img src="/images/logo.png" alt="Logo" style="height: 40px; border-radius: 50%;">
-                <span>Admin <span style="color: var(--accent-color);">Panel</span></span>
-            </a>
-            <nav>
-                <ul class="nav-links">
-                    <li><a href="/" target="_blank" class="nav-link"><i class="fas fa-external-link-alt"></i> View
-                            Site</a></li>
-                    <li><a href="/auth/logout" class="nav-link" style="color: #ff4d4d;"><i
-                                class="fas fa-sign-out-alt"></i> Logout</a></li>
-                </ul>
-                <button id="themeToggle" class="btn-icon" aria-label="Toggle Theme" style="margin-left: 15px;"><i
-                        class="fas fa-moon"></i></button>
-            </nav>
-        </div>
-    </header>
+    <!-- Ambient Background -->
+    <div class="ambient-light">
+        <div class="light-orb orb-1"></div>
+        <div class="light-orb orb-2"></div>
+    </div>
 
-    <main class="admin-container">
+    <div class="noise-overlay"></div>
+
+    <!-- Mobile Toggle -->
+    <button class="mobile-toggle" id="adminMenuToggle">
+        <i class="fas fa-bars"></i>
+    </button>
+
+    <!-- Sidebar -->
+    <aside class="admin-sidebar" id="adminSidebar">
+        <a href="/admin/dashboard" class="admin-brand">
+            <img src="/images/logo.png" alt="Logo">
+            <span>Daily<span style="color: var(--gold-primary);">Mindflow</span></span>
+        </a>
+
+        <ul class="admin-menu">
+            <li>
+                <a href="/admin/dashboard"
+                    class="nav-link <%= global.currentRoute === '/admin/dashboard' ? 'active' : '' %>">
+                    <i class="fas fa-th-large"></i> Dashboard
+                </a>
+            </li>
+            <li>
+                <a href="/admin/categories" class="nav-link">
+                    <i class="fas fa-tags"></i> Categories
+                </a>
+            </li>
+            <li>
+                <a href="/admin/add-post" class="nav-link">
+                    <i class="fas fa-pen-nib"></i> Write Post
+                </a>
+            </li>
+            <li>
+                <a href="/admin/register" class="nav-link">
+                    <i class="fas fa-user-plus"></i> New Admin
+                </a>
+            </li>
+        </ul>
+
+        <div class="admin-footer-actions">
+            <a href="/" target="_blank" class="action-link">
+                <i class="fas fa-external-link-alt"></i> View Live Site
+            </a>
+            <a href="/auth/logout" class="action-link logout-btn">
+                <i class="fas fa-sign-out-alt"></i> Sign Out
+            </a>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="admin-main">
         <%- body %>
+
+            <footer
+                style="margin-top: 60px; text-align: center; color: var(--text-secondary); font-size: 0.85rem; opacity: 0.6;">
+                <p>&copy; <%= new Date().getFullYear() %> DailyMindflow Premium</p>
+            </footer>
     </main>
 
-    <footer class="main-footer" style="padding: 30px 0;">
-        <div class="container">
-            <p>&copy; <%= new Date().getFullYear() %> DailyMindflow Admin. Secure Area.</p>
-        </div>
-    </footer>
-
     <script src="/js/main.js"></script>
+    <script>
+        // Sidebar Toggle
+        const menuToggle = document.getElementById('adminMenuToggle');
+        const sidebar = document.getElementById('adminSidebar');
 
+        if (menuToggle && sidebar) {
+            menuToggle.addEventListener('click', () => {
+                sidebar.classList.toggle('active');
+            });
+
+            document.addEventListener('click', (e) => {
+                if (window.innerWidth <= 1024 &&
+                    !sidebar.contains(e.target) &&
+                    !menuToggle.contains(e.target)) {
+                    sidebar.classList.remove('active');
+                }
+            });
+        }
+
+        // Active Link Logic (Client-side fallback)
+        const currentPath = window.location.pathname;
+        document.querySelectorAll('.nav-link').forEach(link => {
+            if (link.getAttribute('href') === currentPath) link.classList.add('active');
+        });
+    </script>
 </body>
 
 </html>

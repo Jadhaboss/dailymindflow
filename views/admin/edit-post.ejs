@@ -1,98 +1,108 @@
-<div class="container" style="padding-top: 40px; padding-bottom: 60px;">
+<div class="container reveal">
 
     <!-- Header Section -->
-    <div class="reveal" style="margin-bottom: 40px; text-align: center;">
+    <div style="margin-bottom: 50px; text-align: center;">
         <a href="/admin/dashboard" class="back-link"
-            style="display: inline-flex; align-items: center; gap: 8px; color: var(--text-secondary); margin-bottom: 16px; font-weight: 500; font-size: 0.9rem;">
+            style="display: inline-flex; align-items: center; gap: 8px; color: var(--text-secondary); margin-bottom: 20px; font-weight: 500; font-size: 0.95rem; text-decoration: none; transition: color 0.3s;">
             <i class="fas fa-arrow-left"></i> Back to Dashboard
         </a>
-        <h1 style="font-size: 3rem; margin-bottom: 10px;">Edit Story</h1>
-        <p style="color: var(--text-secondary); font-size: 1.1rem; max-width: 600px; margin: 0 auto;">
+        <h1
+            style="font-family: 'Playfair Display', serif; font-size: 3.5rem; margin-bottom: 12px; font-weight: 700; background: linear-gradient(180deg, #fff 0%, rgba(255,255,255,0.7) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+            Edit Story</h1>
+        <p
+            style="color: var(--text-secondary); font-size: 1.1rem; max-width: 600px; margin: 0 auto; letter-spacing: 0.02em;">
             Refine your content and perfect your message.
         </p>
     </div>
 
-    <!-- Main Layout -->
-    <div class="reveal" style="max-width: 900px; margin: 0 auto;">
-
+    <!-- Main Form Card -->
+    <div style="max-width: 900px; margin: 0 auto;">
         <form action="/admin/edit-post/<%= data._id %>?_method=PUT" method="POST" enctype="multipart/form-data">
 
             <div
-                style="background: var(--surface-1); padding: 40px; border-radius: 24px; box-shadow: var(--shadow-lg); border: 1px solid var(--border-color);">
+                style="background: rgba(10, 10, 15, 0.6); backdrop-filter: blur(40px); border: 1px solid rgba(255,255,255,0.08); border-top: 1px solid rgba(255,255,255,0.15); border-radius: 32px; padding: 48px; box-shadow: 0 40px 80px -20px rgba(0,0,0,0.5);">
 
-                <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 24px; margin-bottom: 30px;">
+                <!-- Title & Category Row -->
+                <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 32px; margin-bottom: 32px;">
                     <div class="form-group" style="margin-bottom: 0;">
-                        <label for="title" class="form-label">Title</label>
+                        <label for="title" class="form-label"
+                            style="display: block; margin-bottom: 10px; font-size: 0.85rem; letter-spacing: 1px; text-transform: uppercase; color: rgba(255,255,255,0.5); font-weight: 600; margin-left: 4px;">Title</label>
                         <input type="text" id="title" name="title" value="<%= data.title %>" required
-                            class="form-control" style="font-size: 1.2rem; font-weight: 600;">
+                            class="form-control"
+                            style="width: 100%; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); padding: 16px 20px; border-radius: 16px; color: #fff; font-size: 1.1rem; outline: none; transition: all 0.3s;">
                     </div>
+
                     <div class="form-group" style="margin-bottom: 0;">
-                        <label for="category" class="form-label">Category</label>
+                        <label for="category" class="form-label"
+                            style="display: block; margin-bottom: 10px; font-size: 0.85rem; letter-spacing: 1px; text-transform: uppercase; color: rgba(255,255,255,0.5); font-weight: 600; margin-left: 4px;">Category</label>
                         <div style="position: relative;">
                             <select name="category" id="category" class="form-control"
-                                style="appearance: none; cursor: pointer;">
+                                style="width: 100%; appearance: none; cursor: pointer; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); padding: 16px 20px; border-radius: 16px; color: #fff; font-size: 1rem; outline: none; transition: all 0.3s;">
                                 <% categories.forEach(cat=> { %>
                                     <option value="<%= cat._id %>" <%=data.category &&
-                                        data.category.toString()===cat._id.toString() ? 'selected' : '' %>><%= cat.name
-                                            %>
+                                        data.category.toString()===cat._id.toString() ? 'selected' : '' %>
+                                        style="background: #0f172a;"><%= cat.name %>
                                     </option>
                                     <% }) %>
                             </select>
                             <i class="fas fa-chevron-down"
-                                style="position: absolute; right: 15px; top: 50%; transform: translateY(-50%); color: var(--text-secondary); pointer-events: none;"></i>
+                                style="position: absolute; right: 15px; top: 50%; transform: translateY(-50%); color: rgba(255,255,255,0.4); pointer-events: none;"></i>
                         </div>
                     </div>
                 </div>
 
                 <div class="form-group" style="margin-bottom: 30px;">
-                    <label for="slug" class="form-label">Slug (URL)</label>
+                    <label for="slug" class="form-label"
+                        style="display: block; margin-bottom: 10px; font-size: 0.85rem; letter-spacing: 1px; text-transform: uppercase; color: rgba(255,255,255,0.5); font-weight: 600; margin-left: 4px;">Slug
+                        (URL)</label>
                     <input type="text" id="slug" name="slug" value="<%= data.slug %>" required class="form-control"
-                        style="background: var(--surface-2); font-family: monospace; font-size: 0.9rem;">
+                        style="width: 100%; background: rgba(255,255,255,0.01); border: 1px solid rgba(255,255,255,0.05); padding: 14px 20px; border-radius: 14px; color: rgba(255,255,255,0.7); font-size: 0.95rem; font-family: monospace; outline: none;">
                 </div>
 
                 <!-- Media Section -->
-                <div class="form-group" style="margin-bottom: 30px;">
-                    <label class="form-label">Cover Image</label>
+                <div class="form-group" style="margin-bottom: 40px;">
+                    <label class="form-label"
+                        style="display: block; margin-bottom: 10px; font-size: 0.85rem; letter-spacing: 1px; text-transform: uppercase; color: rgba(255,255,255,0.5); font-weight: 600; margin-left: 4px;">Cover
+                        Image</label>
 
-                    <div style="display: grid; grid-template-columns: 1fr 2fr; gap: 24px;">
-                        <!-- Current Image Preview -->
+                    <div style="display: grid; grid-template-columns: 1fr 2fr; gap: 32px;">
+                        <!-- Current Image -->
                         <% if(data.image) { %>
                             <div
-                                style="position: relative; border-radius: 16px; overflow: hidden; border: 1px solid var(--border-color); height: 160px;">
+                                style="position: relative; border-radius: 16px; overflow: hidden; border: 1px solid rgba(255,255,255,0.1); height: 160px;">
                                 <img src="<%= data.image %>" alt="Current Cover"
                                     style="width: 100%; height: 100%; object-fit: cover;">
                                 <div
-                                    style="position: absolute; bottom: 0; left: 0; width: 100%; background: rgba(0,0,0,0.6); color: white; padding: 6px; font-size: 0.8rem; text-align: center;">
+                                    style="position: absolute; bottom: 0; left: 0; width: 100%; background: rgba(0,0,0,0.6); backdrop-filter: blur(4px); color: white; padding: 8px; font-size: 0.8rem; text-align: center;">
                                     Current</div>
                             </div>
                             <% } else { %>
                                 <div
-                                    style="background: var(--surface-2); border-radius: 16px; border: 1px dashed var(--border-color); height: 160px; display: flex; align-items: center; justify-content: center; color: var(--text-secondary);">
-                                    <i class="fas fa-image" style="margin-right: 8px;"></i> No Image
+                                    style="border-radius: 16px; border: 1px dashed rgba(255,255,255,0.1); height: 160px; display: flex; align-items: center; justify-content: center; color: rgba(255,255,255,0.3);">
+                                    <span style="font-size: 0.9rem;">No Image</span>
                                 </div>
                                 <% } %>
 
-                                    <div style="display: flex; flex-direction: column; gap: 16px;">
+                                    <!-- Upload Controls -->
+                                    <div style="display: flex; flex-direction: column; gap: 20px;">
                                         <div style="position: relative; flex: 1;">
                                             <input type="file" id="imageUpload" name="imageUpload" accept="image/*"
                                                 style="position: absolute; width: 100%; height: 100%; opacity: 0; cursor: pointer; z-index: 2;">
                                             <div class="upload-box-visual"
-                                                style="height: 100%; background: var(--surface-2); border: 2px dashed var(--border-color); border-radius: 16px; display: flex; align-items: center; justify-content: center; transition: all 0.3s ease;">
-                                                <div style="text-align: center;">
-                                                    <i class="fas fa-cloud-upload-alt"
-                                                        style="color: var(--accent-color); font-size: 1.2rem;"></i>
-                                                    <span
-                                                        style="display: block; font-weight: 500; font-size: 0.9rem; margin-top: 4px;">Upload
-                                                        New</span>
-                                                </div>
+                                                style="height: 100%; background: rgba(255,255,255,0.02); border: 2px dashed rgba(255,255,255,0.1); border-radius: 16px; display: flex; align-items: center; justify-content: center; gap: 10px; transition: all 0.3s ease;">
+                                                <i class="fas fa-cloud-upload-alt"
+                                                    style="font-size: 1.2rem; color: var(--gold-primary);"></i>
+                                                <span style="font-weight: 500; color: #fff; font-size: 0.95rem;">Upload
+                                                    New File</span>
                                             </div>
                                         </div>
+
                                         <div style="position: relative;">
                                             <i class="fas fa-link"
-                                                style="position: absolute; left: 15px; top: 50%; transform: translateY(-50%); color: var(--text-secondary);"></i>
+                                                style="position: absolute; left: 16px; top: 50%; transform: translateY(-50%); color: rgba(255,255,255,0.3);"></i>
                                             <input type="text" id="image" name="image" value="<%= data.image %>"
                                                 class="form-control" placeholder="Or update URL..."
-                                                style="padding-left: 40px;">
+                                                style="width: 100%; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); padding: 14px 20px 14px 44px; border-radius: 16px; color: #fff; font-size: 1rem; outline: none;">
                                         </div>
                                     </div>
                     </div>
@@ -100,40 +110,42 @@
 
                 <!-- Content Editor -->
                 <div class="form-group" style="margin-bottom: 40px;">
-                    <label for="body" class="form-label">Story Content</label>
+                    <label for="body" class="form-label"
+                        style="display: block; margin-bottom: 10px; font-size: 0.85rem; letter-spacing: 1px; text-transform: uppercase; color: rgba(255,255,255,0.5); font-weight: 600; margin-left: 4px;">Story
+                        Content</label>
                     <textarea name="body" id="body" rows="15" required class="form-control"
-                        style="font-size: 1.05rem; line-height: 1.8; border: none; background: transparent; padding: 0; min-height: 300px; resize: none; border-top: 1px solid var(--border-color); padding-top: 20px; border-radius: 0;"><%= data.body %></textarea>
+                        style="width: 100%; font-size: 1.1rem; line-height: 1.8; border: none; background: transparent; padding: 20px 0; min-height: 300px; resize: none; border-top: 1px solid rgba(255,255,255,0.1); border-radius: 0; color: rgba(255,255,255,0.9); outline: none; font-family: 'Georgia', serif;"><%= data.body %></textarea>
                 </div>
 
                 <!-- Action Bar -->
                 <div
-                    style="display: flex; align-items: center; justify-content: space-between; padding-top: 20px; border-top: 1px solid var(--border-color);">
-                    <a href="/admin/dashboard" style="color: var(--text-secondary); font-weight: 500;">Cancel</a>
+                    style="display: flex; align-items: center; justify-content: space-between; padding-top: 30px; border-top: 1px solid rgba(255,255,255,0.1);">
+                    <a href="/admin/dashboard"
+                        style="color: rgba(255,255,255,0.5); font-weight: 500; text-decoration: none; transition: color 0.2s;">Cancel</a>
 
                     <button type="submit" class="btn-primary"
-                        style="padding-left: 40px; padding-right: 40px; font-size: 1.1rem;">
-                        <i class="fas fa-save" style="margin-right: 8px;"></i> Save Changes
+                        style="background: var(--gold-gradient); color: #000; padding: 16px 48px; border-radius: 50px; font-weight: 700; border: none; font-size: 1.1rem; display: flex; align-items: center; gap: 10px; cursor: pointer; box-shadow: 0 10px 20px rgba(253, 185, 49, 0.2); transition: transform 0.2s;">
+                        <i class="fas fa-save"></i> Save Changes
                     </button>
                 </div>
 
             </div>
         </form>
     </div>
-
 </div>
 
-<!-- Hover Effect Script for Upload Box -->
 <script>
+    // Visual Feedback Script
     const fileInput = document.getElementById('imageUpload');
     const visualBox = document.querySelector('.upload-box-visual');
 
-    fileInput.addEventListener('dragenter', () => visualBox.style.borderColor = 'var(--accent-color)');
-    fileInput.addEventListener('dragleave', () => visualBox.style.borderColor = 'var(--border-color)');
+    fileInput.addEventListener('dragenter', () => visualBox.style.borderColor = 'var(--gold-primary)');
+    fileInput.addEventListener('dragleave', () => visualBox.style.borderColor = 'rgba(255,255,255,0.1)');
     fileInput.addEventListener('change', () => {
         if (fileInput.files.length > 0) {
-            visualBox.style.borderColor = 'var(--accent-color)';
-            visualBox.innerHTML = '<div style="text-align:center"><i class="fas fa-check" style="color: var(--accent-color);"></i><span style="display:block; font-size:0.85rem; margin-top:4px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width:150px;">' + fileInput.files[0].name + '</span></div>';
-            visualBox.style.background = 'rgba(209, 176, 104, 0.1)';
+            visualBox.style.borderColor = 'var(--gold-primary)';
+            visualBox.style.background = 'rgba(255, 215, 0, 0.05)';
+            visualBox.innerHTML = `<span style="font-weight: 600; color: var(--gold-primary); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; max-width:90%;">${fileInput.files[0].name}</span>`;
         }
     });
 </script>

@@ -1,72 +1,49 @@
-<div class="container" style="min-height: 80vh; display: flex; align-items: center; justify-content: center;">
+<div class="auth-container">
+    <div class="auth-glass-card">
 
-    <div class="reveal" style="width: 100%; max-width: 420px;">
-
-        <!-- Brand Header -->
-        <div style="text-align: center; margin-bottom: 40px;">
-            <div
-                style="width: 64px; height: 64px; background: var(--surface-1); border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; box-shadow: var(--shadow-md); margin-bottom: 24px; border: 1px solid var(--border-color);">
-                <i class="fas fa-fingerprint" style="font-size: 28px; color: var(--accent-color);"></i>
-            </div>
-            <h1 style="font-size: 2.5rem; margin-bottom: 8px;">Welcome Back</h1>
-            <p style="color: var(--text-secondary); font-size: 1.1rem;">Enter your credentials to access the admin
-                panel.</p>
+        <div class="auth-icon-wrapper">
+            <i class="fas fa-fingerprint"></i>
         </div>
 
-        <!-- Login Card -->
-        <div
-            style="background: var(--surface-1); padding: 40px; border-radius: 24px; box-shadow: var(--shadow-lg); border: 1px solid var(--border-color); position: relative; overflow: hidden;">
+        <h1 class="auth-title">Welcome Back</h1>
+        <p class="auth-subtitle">Sign in to access your daily flow</p>
 
-            <!-- Decorative Gradient -->
-            <div
-                style="position: absolute; top: 0; left: 0; width: 100%; height: 6px; background: linear-gradient(90deg, var(--accent-color), var(--primary-color));">
+        <form action="/auth/login" method="POST">
+            <div class="auth-input-group">
+                <label for="username" class="auth-label">Username</label>
+                <div class="input-wrapper">
+                    <input type="text" name="username" id="username" class="auth-input"
+                        placeholder="Enter your username" required autocomplete="username">
+                    <i class="fas fa-user auth-input-icon"></i>
+                </div>
             </div>
 
-            <form action="/auth/login" method="POST">
-
-                <div class="form-group">
-                    <label for="username" class="form-label" style="font-size: 0.95rem;">Username</label>
-                    <div style="position: relative;">
-                        <i class="fas fa-user"
-                            style="position: absolute; left: 16px; top: 50%; transform: translateY(-50%); color: var(--text-secondary); opacity: 0.7;"></i>
-                        <input type="text" name="username" id="username" class="form-control" required
-                            placeholder="Enter your username" style="padding-left: 48px;">
-                    </div>
+            <div class="auth-input-group">
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <label for="password" class="auth-label">Password</label>
                 </div>
-
-                <div class="form-group" style="margin-bottom: 32px;">
-                    <div
-                        style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
-                        <label for="password" class="form-label"
-                            style="font-size: 0.95rem; margin-bottom: 0;">Password</label>
-                    </div>
-                    <div style="position: relative;">
-                        <i class="fas fa-lock"
-                            style="position: absolute; left: 16px; top: 50%; transform: translateY(-50%); color: var(--text-secondary); opacity: 0.7;"></i>
-                        <input type="password" name="password" id="password" class="form-control" required
-                            placeholder="••••••••" style="padding-left: 48px;">
-                    </div>
+                <div class="input-wrapper">
+                    <input type="password" name="password" id="password" class="auth-input" placeholder="••••••••"
+                        required autocomplete="current-password">
+                    <i class="fas fa-lock auth-input-icon"></i>
                 </div>
+            </div>
 
-                <button type="submit" class="btn-primary"
-                    style="width: 100%; height: 50px; display: flex; align-items: center; justify-content: center; gap: 10px; font-size: 1.05rem;">
-                    <span>Sign In</span>
-                    <i class="fas fa-arrow-right" style="font-size: 0.9rem;"></i>
-                </button>
+            <button type="submit" class="auth-btn">
+                <span>Sign In</span>
+                <i class="fas fa-arrow-right"></i>
+            </button>
+        </form>
 
-            </form>
+        <div class="auth-footer">
+            <p>New here? <a href="/auth/register" class="auth-link">Create an account</a></p>
         </div>
-
-        <!-- Footer Links -->
-        <div style="text-align: center; margin-top: 32px;">
-            <p style="color: var(--text-secondary); font-size: 0.95rem;">
-                Don't have an account?
-                <a href="/auth/register"
-                    style="color: var(--text-color); font-weight: 600; text-decoration: none; border-bottom: 1px solid var(--accent-color);">Create
-                    one</a>
-            </p>
-        </div>
-
     </div>
 
+    <div style="text-align: center; margin-top: 30px; opacity: 0.5;">
+        <a href="/"
+            style="color: rgba(255,255,255,0.7); font-size: 0.9rem; display: inline-flex; align-items: center; gap: 8px; text-decoration: none; transition: color 0.3s;">
+            <i class="fas fa-arrow-left"></i> Back to Home
+        </a>
+    </div>
 </div>

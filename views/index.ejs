@@ -1,37 +1,82 @@
-<div class="hero">
-    <h1>Flow Your Mind Daily.</h1>
-    <p>Discover stories, thinking, and expertise from writers on any topic. A place where ideas find their voice.</p>
-</div>
+<!-- Hero Section -->
+<section class="hero reveal">
+    <div style="position: relative; z-index: 2;">
+        <h1>
+            <span class="text-gradient">Discover</span> new perspectives.
+        </h1>
+        <p>
+            Explore a curated collection of stories, thinking, and expertise.
+            <br>Where ideas find their voice.
+        </p>
+        <div style="margin-top: 32px; display: flex; gap: 16px; justify-content: center;">
+            <a href="/articles" class="btn-primary">Start Reading</a>
+            <a href="/about" class="btn-primary"
+                style="background: transparent; color: var(--text-color); border: 2px solid var(--text-color); box-shadow: none;">Our
+                Story</a>
+        </div>
+    </div>
 
+    <!-- Abstract Decoration (Optional) -->
+    <div
+        style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 600px; height: 600px; background: radial-gradient(circle, rgba(212, 175, 55, 0.1) 0%, transparent 70%); filter: blur(80px); z-index: 1; pointer-events: none;">
+    </div>
+</section>
+
+<!-- Latest Posts -->
 <section class="posts-section container">
+    <div style="display: flex; justify-content: space-between; align-items: end; margin-bottom: 40px;" class="reveal">
+        <h2>Latest Articles</h2>
+        <a href="/articles"
+            style="font-weight: 600; color: var(--accent-color); display: flex; align-items: center; gap: 8px;">View All
+            <i class="fas fa-arrow-right"></i></a>
+    </div>
+
     <div class="post-grid">
-        <% data.forEach(post=> { %>
-            <article class="post-card reveal">
-                <a href="/post/<%= post._id %>">
+        <% data.forEach((post, index)=> { %>
+            <article class="post-card glass-panel reveal" style="transition-delay: <%= index * 100 %>ms">
+                <a href="/post/<%= post._id %>" style="display: flex; flex-direction: column; height: 100%;">
                     <% if(post.image && post.image.trim() !=="" ) { %>
                         <div class="card-image-wrapper">
                             <img src="<%= post.image %>" alt="<%= post.title %>" loading="lazy">
                         </div>
-                        <% } %>
-                            <div class="post-content">
-                                <h3>
-                                    <%= post.title %>
-                                </h3>
-                                <p class="post-excerpt">
-                                    <%= post.body.substring(0, 120) %>...
-                                </p>
-                                <span class="read-more-btn">Read More <i class="fas fa-arrow-right"></i></span>
+                        <% } else { %>
+                            <!-- Fallback Pattern if no image -->
+                            <div class="card-image-wrapper"
+                                style="background: linear-gradient(135deg, var(--surface-2) 0%, var(--border-color) 100%); display: flex; align-items: center; justify-content: center;">
+                                <i class="fas fa-pen-nib" style="font-size: 3rem; opacity: 0.2;"></i>
                             </div>
+                            <% } %>
+
+                                <div class="post-content">
+                                    <!-- Optional Category Badge if available in schema, else hardcode or omit -->
+                                    <span
+                                        style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px; color: var(--accent-color); font-weight: 700; margin-bottom: 8px; display: block;">Article</span>
+
+                                    <h3>
+                                        <%= post.title %>
+                                    </h3>
+
+                                    <p class="post-excerpt">
+                                        <%= post.body.replace(/(<([^>]+)>)/gi, "").substring(0, 120) %>...
+                                    </p>
+
+                                    <div
+                                        style="margin-top: auto; padding-top: 20px; border-top: 1px solid rgba(0,0,0,0.05); display: flex; justify-content: space-between; align-items: center;">
+                                        <span class="read-more-btn">Read Now <i class="fas fa-arrow-right"></i></span>
+                                        <span style="font-size: 0.85rem; color: var(--text-secondary);">
+                                            <%= new Date(post.createdAt).toLocaleDateString() %>
+                                        </span>
+                                    </div>
+                                </div>
                 </a>
             </article>
             <% }) %>
     </div>
 
     <% if (typeof showSeeAll !=='undefined' && showSeeAll) { %>
-        <div style="margin-top: 60px; text-align: center;" class="reveal">
-            <a href="/articles" class="btn btn-primary"
-                style="padding: 14px 32px; font-size: 1.1rem; border-radius: 50px;">
-                See All Articles <i class="fas fa-arrow-right" style="margin-left: 8px;"></i>
+        <div style="margin-top: 80px; text-align: center;" class="reveal">
+            <a href="/articles" class="btn-primary">
+                Browse All Articles
             </a>
         </div>
         <% } %>

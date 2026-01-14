@@ -1,24 +1,47 @@
-<div class="admin-actions reveal">
-    <h1>Edit Category</h1>
-    <a href="/admin/categories" class="back-link"
-        style="color: var(--text-secondary); display: inline-flex; align-items: center; gap: 8px;">
-        <i class="fas fa-arrow-left"></i> Back to Categories
-    </a>
-</div>
+<div class="container" style="min-height: 80vh; display: flex; align-items: center; justify-content: center;">
 
-<div class="reveal"
-    style="max-width: 600px; background: var(--surface-1); padding: 40px; border-radius: 20px; border: 1px solid var(--border-color); box-shadow: var(--shadow-sm);">
-    <form action="/admin/edit-category/<%= data._id %>?_method=PUT" method="POST">
-
-        <div class="form-group">
-            <label for="name" class="form-label">Category Name</label>
-            <input type="text" id="name" name="name" value="<%= data.name %>" required class="form-control">
+    <div class="reveal" style="width: 100%; max-width: 500px;">
+        <!-- Header -->
+        <div style="text-align: center; margin-bottom: 30px;">
+            <h1 style="font-size: 2.5rem; margin-bottom: 10px;">Edit Category</h1>
+            <p style="color: var(--text-secondary);">Update the category details below</p>
         </div>
 
-        <div style="display: flex; justify-content: flex-end; gap: 16px; margin-top: 30px;">
-            <a href="/admin/categories" class="btn"
-                style="padding: 12px 24px; border-radius: 50px; border: 1px solid var(--border-color); color: var(--text-secondary);">Cancel</a>
-            <button type="submit" class="btn-primary">Update Category</button>
+        <!-- Edit Form Card -->
+        <div class="glass-panel" style="padding: 40px; border-radius: 24px;">
+
+            <form action="/admin/edit-category/<%= data._id %>?_method=PUT" method="POST">
+
+                <div class="form-group" style="margin-bottom: 30px;">
+                    <label for="name" class="form-label">Category Name</label>
+                    <div style="position: relative;">
+                        <i class="fas fa-tag"
+                            style="position: absolute; left: 16px; top: 50%; transform: translateY(-50%); color: var(--text-secondary); opacity: 0.7;"></i>
+                        <input type="text" id="name" name="name" value="<%= data.name %>" required class="form-control"
+                            style="padding-left: 48px; height: 50px;">
+                    </div>
+                </div>
+
+                <div style="display: flex; gap: 16px;">
+                    <a href="/admin/categories" class="btn"
+                        style="flex: 1; justify-content: center; background: var(--surface-2); color: var(--text-color); border: 1px solid var(--border-color); border-radius: 12px; height: 50px; display: flex; align-items: center;">
+                        Cancel
+                    </a>
+                    <button type="submit" class="btn-primary"
+                        style="flex: 1; justify-content: center; height: 50px; border-radius: 12px; font-size: 1rem;">
+                        Save Changes
+                    </button>
+                </div>
+
+            </form>
         </div>
-    </form>
+
+        <div style="text-align: center; margin-top: 30px;">
+            <a href="/admin/categories"
+                style="color: var(--text-secondary); text-decoration: none; font-size: 0.9rem; display: inline-flex; align-items: center; gap: 6px;">
+                <i class="fas fa-arrow-left"></i> Back to Categories
+            </a>
+        </div>
+    </div>
+
 </div>

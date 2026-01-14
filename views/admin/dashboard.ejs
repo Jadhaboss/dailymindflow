@@ -1,86 +1,124 @@
-<div class="container" style="padding-top: 40px; padding-bottom: 60px;">
+<div class="container reveal">
 
     <!-- Dashboard Header -->
-    <div class="reveal"
-        style="margin-bottom: 40px; display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 20px;">
+    <div
+        style="margin-bottom: 50px; display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 20px;">
         <div>
             <span
-                style="font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; color: var(--accent-color); font-weight: 600;">Overview</span>
-            <h1 style="font-size: 3rem; margin-top: 5px; margin-bottom: 0;">Dashboard</h1>
+                style="font-size: 0.85rem; text-transform: uppercase; letter-spacing: 2px; color: var(--gold-primary); font-weight: 700; display: block; margin-bottom: 12px; opacity: 0.9;">Overview</span>
+            <h1
+                style="font-family: 'Playfair Display', serif; font-size: 3.5rem; margin: 0; line-height: 1; font-weight: 700; background: linear-gradient(180deg, #fff 0%, rgba(255,255,255,0.7) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+                Dashboard</h1>
         </div>
 
-        <div style="display: flex; gap: 12px;">
+        <div style="display: flex; gap: 16px;">
             <a href="/admin/categories" class="btn"
-                style="background: var(--surface-1); border: 1px solid var(--border-color); color: var(--text-color); display: inline-flex; align-items: center; gap: 8px; padding: 12px 24px; border-radius: 50px; box-shadow: var(--shadow-sm); transition: all 0.2s;">
-                <i class="fas fa-tags"></i> <span>Manage Categories</span>
+                style="background: rgba(255,255,255,0.03); color: #fff; border: 1px solid rgba(255,255,255,0.1); padding: 14px 28px; border-radius: 50px; display: flex; align-items: center; gap: 10px; font-weight: 500; transition: all 0.3s;">
+                <i class="fas fa-tags" style="color: rgba(255,255,255,0.6);"></i> Categories
             </a>
             <a href="/admin/add-post" class="btn-primary"
-                style="text-decoration: none; display: inline-flex; align-items: center; gap: 8px; padding: 12px 24px; border-radius: 50px; box-shadow: var(--shadow-md);">
-                <i class="fas fa-plus"></i> <span style="font-weight: 500;">New Post</span>
+                style="background: var(--gold-gradient); color: #000; padding: 14px 32px; border-radius: 50px; font-weight: 700; border: none; display: flex; align-items: center; gap: 10px; text-decoration: none; box-shadow: 0 10px 20px rgba(253, 185, 49, 0.2); transition: transform 0.2s;">
+                <i class="fas fa-plus"></i> New Post
             </a>
         </div>
     </div>
 
-    <!-- Stats Row (Optional Placeholder for Future) -->
-    <!-- <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 24px; margin-bottom: 40px;"> ... </div> -->
-
-    <!-- Main Content Card -->
-    <div class="reveal"
-        style="background: var(--surface-1); border-radius: 24px; border: 1px solid var(--border-color); box-shadow: var(--shadow-lg); overflow: hidden;">
-
+    <!-- Stats Grid -->
+    <div
+        style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; margin-bottom: 50px;">
+        <!-- Total Posts Card -->
         <div
-            style="padding: 30px; border-bottom: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center;">
-            <h3 style="font-size: 1.25rem; margin: 0;">Recent Posts</h3>
-            <span style="font-size: 0.9rem; color: var(--text-secondary);">
-                <%= posts.length %> total stories
-            </span>
+            style="background: rgba(10, 10, 15, 0.6); backdrop-filter: blur(40px); border: 1px solid rgba(255,255,255,0.08); border-top: 1px solid rgba(255,255,255,0.15); border-radius: 24px; padding: 32px; display: flex; align-items: center; gap: 24px; box-shadow: 0 20px 40px -10px rgba(0,0,0,0.3);">
+            <div
+                style="width: 70px; height: 70px; border-radius: 20px; background: linear-gradient(135deg, rgba(255, 215, 0, 0.1), rgba(255, 215, 0, 0.02)); display: flex; align-items: center; justify-content: center; border: 1px solid rgba(255, 215, 0, 0.1); box-shadow: inset 0 0 20px rgba(255, 215, 0, 0.05);">
+                <i class="fas fa-feather-alt"
+                    style="font-size: 1.8rem; color: var(--gold-primary); filter: drop-shadow(0 0 5px rgba(255, 215, 0, 0.4));"></i>
+            </div>
+            <div>
+                <span
+                    style="display: block; color: var(--text-secondary); font-size: 0.95rem; font-weight: 500; margin-bottom: 6px;">Total
+                    Stories</span>
+                <span
+                    style="display: block; font-size: 2.5rem; font-weight: 700; color: #fff; font-family: 'Playfair Display', serif; line-height: 1;">
+                    <%= posts.length %>
+                </span>
+            </div>
+        </div>
+
+        <!-- Create New Card -->
+        <a href="/admin/add-post"
+            style="background: rgba(10, 10, 15, 0.6); backdrop-filter: blur(40px); border: 1px solid rgba(255,255,255,0.08); border-radius: 24px; padding: 32px; display: flex; align-items: center; justify-content: space-between; text-decoration: none; transition: transform 0.3s, border-color 0.3s; position: relative; overflow: hidden; group">
+            <div style="position: relative; z-index: 2;">
+                <span
+                    style="display: block; color: #fff; font-size: 1.2rem; font-weight: 700; margin-bottom: 6px; font-family: 'Playfair Display', serif;">Write
+                    Something New</span>
+                <span style="display: block; font-size: 0.95rem; color: var(--text-secondary);">Draft a new blog
+                    post</span>
+            </div>
+            <div
+                style="width: 50px; height: 50px; border-radius: 50%; background: rgba(255,255,255,0.05); display: flex; align-items: center; justify-content: center; border: 1px solid rgba(255,255,255,0.1); transition: background 0.3s;">
+                <i class="fas fa-arrow-right" style="color: #fff;"></i>
+            </div>
+        </a>
+    </div>
+
+    <!-- Recent Posts Section -->
+    <div
+        style="background: rgba(10, 10, 15, 0.6); backdrop-filter: blur(40px); border: 1px solid rgba(255,255,255,0.08); border-radius: 24px; overflow: hidden; box-shadow: 0 20px 40px -10px rgba(0,0,0,0.3);">
+        <div
+            style="padding: 24px 32px; border-bottom: 1px solid rgba(255,255,255,0.08); display: flex; justify-content: space-between; align-items: center; background: rgba(255,255,255,0.01);">
+            <h3
+                style="font-size: 1.2rem; margin: 0; display: flex; align-items: center; gap: 12px; font-weight: 600; color: #fff;">
+                <i class="fas fa-history" style="color: var(--gold-primary);"></i> Recent Activity
+            </h3>
         </div>
 
         <% if(posts && posts.length> 0) { %>
-            <div class="table-responsive">
+            <div style="overflow-x: auto;">
                 <table style="width: 100%; border-collapse: collapse; min-width: 700px;">
-                    <thead style="background: var(--surface-2);">
-                        <tr>
+                    <thead>
+                        <tr style="border-bottom: 1px solid rgba(255,255,255,0.05);">
                             <th
-                                style="padding: 20px 30px; text-align: left; font-weight: 600; color: var(--text-secondary); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.5px;">
+                                style="padding: 20px 32px; text-align: left; font-weight: 600; color: rgba(255,255,255,0.4); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px;">
                                 Title</th>
                             <th
-                                style="padding: 20px 30px; text-align: left; font-weight: 600; color: var(--text-secondary); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.5px;">
-                                Date</th>
+                                style="padding: 20px 32px; text-align: left; font-weight: 600; color: rgba(255,255,255,0.4); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px;">
+                                Published</th>
                             <th
-                                style="padding: 20px 30px; text-align: right; font-weight: 600; color: var(--text-secondary); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.5px;">
+                                style="padding: 20px 32px; text-align: right; font-weight: 600; color: rgba(255,255,255,0.4); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px;">
                                 Actions</th>
                         </tr>
                     </thead>
                     <tbody>
                         <% posts.forEach(post=> { %>
-                            <tr style="border-bottom: 1px solid var(--border-color); transition: background 0.2s;"
-                                onmouseover="this.style.background='var(--surface-2)'"
+                            <tr style="border-bottom: 1px solid rgba(255,255,255,0.03); transition: background 0.2s;"
+                                onmouseover="this.style.background='rgba(255,255,255,0.02)'"
                                 onmouseout="this.style.background='transparent'">
-                                <td style="padding: 20px 30px;">
+                                <td style="padding: 24px 32px;">
                                     <h4
-                                        style="margin: 0; font-size: 1.1rem; font-weight: 600; color: var(--text-color);">
+                                        style="margin: 0; font-size: 1.1rem; font-weight: 600; color: #fff; font-family: 'Playfair Display', serif;">
                                         <%= post.title %>
                                     </h4>
                                 </td>
-                                <td style="padding: 20px 30px; color: var(--text-secondary); font-size: 0.95rem;">
-                                    <i class="far fa-calendar-alt" style="margin-right: 6px; opacity: 0.7;"></i>
+                                <td style="padding: 24px 32px; color: var(--text-secondary); font-size: 0.95rem;">
                                     <%= new Date(post.createdAt).toLocaleDateString(undefined, { year: 'numeric' ,
                                         month: 'short' , day: 'numeric' }) %>
                                 </td>
-                                <td style="padding: 20px 30px; text-align: right;">
+                                <td style="padding: 24px 32px; text-align: right;">
                                     <div style="display: inline-flex; gap: 10px;">
-                                        <a href="/admin/edit-post/<%= post._id %>" class="btn-icon" title="Edit"
-                                            style="width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; border-radius: 50%; background: var(--surface-2); color: var(--text-color); transition: all 0.2s; border: 1px solid var(--border-color);">
+                                        <a href="/admin/edit-post/<%= post._id %>"
+                                            style="width: 38px; height: 38px; display: flex; align-items: center; justify-content: center; border-radius: 10px; border: 1px solid rgba(255,255,255,0.1); background: rgba(255,255,255,0.03); color: var(--text-secondary); transition: all 0.2s; text-decoration: none;"
+                                            title="Edit">
                                             <i class="fas fa-pen" style="font-size: 0.9rem;"></i>
                                         </a>
 
                                         <form action="/admin/delete-post/<%= post._id %>?_method=DELETE" method="POST"
                                             style="display:inline;"
-                                            onsubmit="return confirm('Are you sure you want to delete this post? This cannot be undone.');">
-                                            <button type="submit" class="btn-icon" title="Delete"
-                                                style="width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; border-radius: 50%; background: rgba(239, 68, 68, 0.1); color: #ef4444; border: 1px solid transparent; cursor: pointer; transition: all 0.2s;">
-                                                <i class="fas fa-trash" style="font-size: 0.9rem;"></i>
+                                            onsubmit="return confirm('Are you sure you want to delete this post?');">
+                                            <button type="submit"
+                                                style="width: 38px; height: 38px; display: flex; align-items: center; justify-content: center; border-radius: 10px; border: 1px solid rgba(239, 68, 68, 0.2); background: rgba(239, 68, 68, 0.05); color: #ef4444; transition: all 0.2s; cursor: pointer;"
+                                                title="Delete">
+                                                <i class="fas fa-trash-alt" style="font-size: 0.9rem;"></i>
                                             </button>
                                         </form>
                                     </div>
@@ -91,29 +129,19 @@
                 </table>
             </div>
             <% } else { %>
-                <div
-                    style="padding: 80px 20px; text-align: center; display: flex; flex-direction: column; align-items: center;">
+                <div style="padding: 100px 20px; text-align: center;">
                     <div
-                        style="width: 80px; height: 80px; background: var(--surface-2); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 24px;">
-                        <i class="fas fa-feather-alt"
-                            style="font-size: 2.5rem; color: var(--text-secondary); opacity: 0.5;"></i>
+                        style="width: 80px; height: 80px; border-radius: 50%; background: rgba(255,255,255,0.03); display: inline-flex; align-items: center; justify-content: center; margin-bottom: 24px; border: 1px solid rgba(255,255,255,0.05);">
+                        <i class="fas fa-feather-alt" style="font-size: 2.5rem; color: rgba(255,255,255,0.2);"></i>
                     </div>
-                    <h3 style="margin-bottom: 10px; font-size: 1.5rem;">No stories yet</h3>
-                    <p style="color: var(--text-secondary); max-width: 400px; margin-bottom: 30px; line-height: 1.6;">
-                        Your dashboard is looking a bit empty. It's the perfect time to start writing your first
-                        masterpiece.
-                    </p>
-                    <a href="/admin/add-post" class="btn-primary" style="padding: 12px 32px; border-radius: 50px;">
-                        Write your first post
-                    </a>
+                    <h3 style="margin-bottom: 12px; font-size: 1.5rem; font-family: 'Playfair Display', serif;">No
+                        stories yet</h3>
+                    <p style="color: var(--text-secondary); max-width: 400px; margin: 0 auto 30px;">Your dashboard is
+                        waiting for your first masterpiece.</p>
+                    <a href="/admin/add-post" class="btn-primary"
+                        style="background: var(--gold-primary); color: #000; padding: 12px 24px; border-radius: 50px; text-decoration: none; font-weight: 700;">Write
+                        First Post</a>
                 </div>
                 <% } %>
     </div>
 </div>
-
-<style>
-    .btn-icon:hover {
-        transform: translateY(-2px);
-        box-shadow: var(--shadow-sm);
-    }
-</style>

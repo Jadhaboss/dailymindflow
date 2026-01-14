@@ -1,31 +1,62 @@
-<article class="single-post-container">
-    <header class="post-meta-header reveal">
+<!-- Single Post Container -->
+<article class="single-post-container reveal">
+
+    <!-- Header -->
+    <header class="post-header">
         <% if(data.category) { %>
-            <span class="category-badge">
+            <span class="post-category">
                 <%= data.category.name %>
             </span>
-            <% } %>
-                <h1>
-                    <%= data.title %>
-                </h1>
-                <div class="post-meta-info">
-                    <span>By Admin</span> &bull;
-                    <span>
-                        <%= new Date(data.createdAt).toLocaleDateString('en-US', { month: 'long' , day: 'numeric' ,
-                            year: 'numeric' }) %>
-                    </span>
-                </div>
+            <% } else { %>
+                <span class="post-category">Article</span>
+                <% } %>
+
+                    <h1 class="post-title">
+                        <%= data.title %>
+                    </h1>
+
+                    <div class="post-meta">
+                        <span>By <strong>Admin</strong></span> &bull;
+                        <span>
+                            <%= new Date(data.createdAt).toLocaleDateString('en-US', { month: 'long' , day: 'numeric' ,
+                                year: 'numeric' }) %>
+                        </span>
+                    </div>
     </header>
 
-    <% if(data.image) { %>
-        <img src="<%= data.image %>" alt="<%= data.title %>" class="post-feature-img reveal">
-        <% } %>
-
-            <div class="article-content reveal">
-                <%- data.body.replace(/\n/g, '<br>' ) %>
+    <!-- Content Card -->
+    <div class="glass-panel" style="padding: 40px; margin-bottom: 60px;">
+        <% if(data.image) { %>
+            <div style="margin: -40px -40px 40px -40px; overflow: hidden; border-radius: 20px 20px 0 0;">
+                <img src="<%= data.image %>" alt="<%= data.title %>" class="featured-image"
+                    style="margin-bottom: 0; border-radius: 0; width: 100%;">
             </div>
+            <% } %>
 
-            <div style="margin-top: 60px; text-align: center;">
-                <a href="/" class="btn-icon"><i class="fas fa-arrow-left"></i> Back to Home</a>
-            </div>
+                <div class="article-body">
+                    <%- data.body %>
+                </div>
+
+                <!-- Tags / Share (Optional) -->
+                <div
+                    style="margin-top: 60px; padding-top: 30px; border-top: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px;">
+                    <div style="display: flex; gap: 10px;">
+                        <span style="font-weight: 600; color: var(--text-color);">Share:</span>
+                        <button class="btn-icon" style="font-size: 1rem;"><i class="fab fa-twitter"></i></button>
+                        <button class="btn-icon" style="font-size: 1rem;"><i class="fab fa-facebook-f"></i></button>
+                        <button class="btn-icon" style="font-size: 1rem;"><i class="fab fa-linkedin-in"></i></button>
+                    </div>
+                </div>
+    </div>
+
+    <!-- Navigation / Actions -->
+    <div style="display: flex; justify-content: space-between; align-items: center;">
+        <a href="/" class="btn-primary"
+            style="background: transparent; border: 1px solid var(--text-color); color: var(--text-color); box-shadow: none; padding: 12px 24px;">
+            <i class="fas fa-arrow-left" style="margin-right: 8px;"></i> Back to Home
+        </a>
+    </div>
+
 </article>
+
+<!-- Progress bar is injected by main.js automatically -->
